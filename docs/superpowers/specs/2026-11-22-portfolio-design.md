@@ -35,7 +35,7 @@ Audience: recruiters and engineering managers, usually skimming on a phone for u
 
 ## Design
 
-**Visual:** clean, dark-on-light with one accent color, large name, plenty of whitespace. Single column on phone, two columns for projects on desktop.
+**Visual (updated):** modeled on the structure and feel of a single-page dark portfolio the owner shared as a reference (dark default with a light toggle, large name hero, project cards with detail dialogs, timeline experience, "Let's talk" contact). Content and styling are original; no text, images or code are copied from the reference. Interactions: header social icons with hover tooltips, "Learn more" links with moving arrows, project cards with a subtle tilt on hover, a 3D-lift primary button, smooth scrolling with a back-to-top link, pressed states, reduced-motion support. Single column on phone, two or three columns on desktop.
 
 **Sections, top to bottom:**
 
