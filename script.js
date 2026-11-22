@@ -2,31 +2,35 @@
   "use strict";
 
   var root = document.documentElement;
+  var reduceMotion = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  var EMAIL = "anant_s@ce.iitr.ac.in";
 
-  // Footer year
+  // ---------------------------------------------------------------
+  // Basics
+  // ---------------------------------------------------------------
   var yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  // Theme: follow the system by default, let the visitor switch, remember the choice.
+  // Theme: swaps which sections are dark and which are light.
   var themeBtn = document.getElementById("theme-toggle");
-  function setTheme(mode) {
-    root.setAttribute("data-theme", mode);
-    if (themeBtn) themeBtn.setAttribute("aria-pressed", mode === "dark" ? "true" : "false");
+  function setInverted(on) {
+    root.classList.toggle("inverted", on);
+    if (themeBtn) themeBtn.setAttribute("aria-pressed", on ? "true" : "false");
   }
-  try {
-    var saved = localStorage.getItem("site-theme");
-    if (saved === "light" || saved === "dark") setTheme(saved);
-    else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) setTheme("dark");
-  } catch (e) { /* storage or matchMedia unavailable: keep light */ }
+  try { setInverted(localStorage.getItem("site-inverted") === "1"); } catch (e) { /* storage unavailable */ }
   if (themeBtn) {
     themeBtn.addEventListener("click", function () {
-      var next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
-      setTheme(next);
-      try { localStorage.setItem("site-theme", next); } catch (e) { /* ignore */ }
+      var on = !root.classList.contains("inverted");
+      if (!reduceMotion) {
+        root.classList.add("theming");
+        setTimeout(function () { root.classList.remove("theming"); }, 500);
+      }
+      setInverted(on);
+      try { localStorage.setItem("site-inverted", on ? "1" : "0"); } catch (e) { /* ignore */ }
     });
   }
 
-  // Menu dialog (small screens)
+  // Menu dialog
   var navDialog = document.getElementById("nav-dialog");
   var menuBtn = document.getElementById("menu-toggle");
   if (navDialog && menuBtn) {
@@ -34,57 +38,58 @@
       navDialog.showModal();
       menuBtn.setAttribute("aria-expanded", "true");
     });
-    navDialog.addEventListener("close", function () {
-      menuBtn.setAttribute("aria-expanded", "false");
-    });
+    navDialog.addEventListener("close", function () { menuBtn.setAttribute("aria-expanded", "false"); });
     navDialog.querySelectorAll("[data-close-nav], .nav-links a").forEach(function (el) {
       el.addEventListener("click", function () { navDialog.close(); });
     });
-    navDialog.addEventListener("click", function (e) {
-      if (e.target === navDialog) navDialog.close();
-    });
+    navDialog.addEventListener("click", function (e) { if (e.target === navDialog) navDialog.close(); });
   }
 
+  // Pill navigation shrinks once the page scrolls.
+  var pill = document.getElementById("pill");
+
+  // ---------------------------------------------------------------
   // Project details
+  // ---------------------------------------------------------------
   var projects = {
     nes: {
-      meta: "AI Velocity · May–Jul 2026",
+      meta: "AI Velocity, May to Jul 2026",
       title: "Next Edit Suggestion model",
       points: [
         "Fine-tuned 7B LLMs across all three post-training stages on a proprietary codebase.",
         "Built a Next Edit Suggestion model for an in-house IDE that learns organization-specific code patterns.",
         "CCEval accuracy up 3.94%. Zeta Eval up 5.21%, with CCEval regression held to 0.91%."
       ],
-      stack: "PyTorch · LLM fine-tuning · Evaluation (CCEval, Zeta Eval)"
+      stack: "PyTorch, LLM fine-tuning, evaluation (CCEval, Zeta Eval)"
     },
     review: {
-      meta: "Hostel Affairs Council · May–Jun 2026",
+      meta: "Hostel Affairs Council, May to Jun 2026",
       title: "LLM code review agent",
       points: [
         "RAG-based agent that indexes a codebase for context-aware retrieval of prior code patterns.",
         "Flags bugs and style violations in pull requests against project-specific conventions."
       ],
-      stack: "RAG · Agents · Python"
+      stack: "RAG, agents, Python"
     },
     papers: {
-      meta: "VLG, IIT Roorkee · May–Jun 2026",
-      title: "Research paper summarizer & fact-checker",
+      meta: "VLG, IIT Roorkee, May to Jun 2026",
+      title: "Research paper summarizer and fact-checker",
       points: [
         "LangGraph pipeline using the Semantic Scholar API to collate recent, highly cited papers.",
         "Web-search and citation-lookup tools check the claims in each collated paper.",
         "Summaries of verified papers with key findings and trends, generated with the OpenAI API."
       ],
-      stack: "LangGraph · Semantic Scholar API · OpenAI API"
+      stack: "LangGraph, Semantic Scholar API, OpenAI API"
     },
     campus: {
-      meta: "VLG, IIT Roorkee · May–Jun 2026",
-      title: "Smart campus syllabus & assignment assistant",
+      meta: "VLG, IIT Roorkee, May to Jun 2026",
+      title: "Smart campus syllabus and assignment assistant",
       points: [
         "Full-stack platform in React and FastAPI for courses, assignments and academic deadlines.",
         "LangChain agent with schedule and assignment context that plans study days.",
         "RAG over uploaded syllabi using ChromaDB and the OpenAI API."
       ],
-      stack: "React · FastAPI · LangChain · ChromaDB · OpenAI API"
+      stack: "React, FastAPI, LangChain, ChromaDB, OpenAI API"
     },
     cyclist: {
       meta: "Accepted at WCTR 2026",
@@ -92,19 +97,39 @@
       points: [
         "Real-time computer vision on monocular video to estimate a cyclist's lateral position.",
         "Four-stage pipeline: filtering, scanline edge detection, RANSAC fitting.",
-        "Replaced costly LiDAR and GPS sensors with a low-height camera, cutting fit error 15–25%.",
+        "Replaced costly LiDAR and GPS sensors with a low-height camera, cutting fit error 15 to 25%.",
         "Co-authored with Prof. Indrajit Ghosh."
       ],
-      stack: "OpenCV · RANSAC · Computer vision"
+      stack: "OpenCV, RANSAC, computer vision"
     },
     llmscope: {
-      meta: "Google Developer Students Club · Jun–Jul 2026",
+      meta: "Google Developer Students Club, Jun to Jul 2026",
       title: "llmscope",
       points: [
         "C++14 telemetry tool that hooks into a local model's forward pass without changing the model.",
         "Shows tensor shapes, activations and per-layer latency in an interactive terminal UI."
       ],
-      stack: "C++14 · Profiling · Terminal UI"
+      stack: "C++14, profiling, terminal UI"
+    },
+    swiggy: {
+      meta: "SocBiz, IIT Roorkee, May to Jun 2026",
+      title: "Swiggy Sense",
+      points: [
+        "GenAI food agent designed to cut the decision fatigue that traditional recommenders do not solve.",
+        "Eight-stage agent pipeline (perceive, plan, guardrail, act, learn) that brings user decision time down to 30 seconds.",
+        "Tiered revenue model from Rs. 746 cr to 2,385 cr with six risk mitigations, projecting 7.6x ROI at scale."
+      ],
+      stack: "Agent design, product modeling, GenAI"
+    },
+    lidar: {
+      meta: "CED, IIT Roorkee, from Aug 2026",
+      title: "Smart traffic enforcement with LiDAR",
+      points: [
+        "LiDAR-based perception system that detects tailgating violations at toll barriers in real traffic.",
+        "Processes point-cloud data to track vehicle spacing and flag unsafe following distance.",
+        "Aims at a low-cost alternative to camera systems, which struggle with occlusion and glare."
+      ],
+      stack: "LiDAR, point clouds, real-time perception"
     }
   };
 
@@ -128,29 +153,116 @@
     pdStack.textContent = p.stack;
     pd.showModal();
   }
-
-  document.querySelectorAll(".work-row[data-project]").forEach(function (row) {
-    row.addEventListener("click", function () { openProject(row.getAttribute("data-project")); });
+  document.querySelectorAll("[data-project]").forEach(function (el) {
+    el.addEventListener("click", function () { openProject(el.getAttribute("data-project")); });
   });
   if (pd) {
     pd.querySelector("[data-close]").addEventListener("click", function () { pd.close(); });
     pd.addEventListener("click", function (e) { if (e.target === pd) pd.close(); });
   }
 
-  // Measured results count up once, when they first scroll into view.
-  // Final values are already in the HTML, so the page reads correctly without JS.
-  var counters = document.querySelectorAll("[data-count]");
-  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // ---------------------------------------------------------------
+  // Contact form: builds an email draft, nothing is sent from the page.
+  // ---------------------------------------------------------------
+  var form = document.getElementById("mail-form");
+  var note = document.getElementById("form-note");
+  if (form) {
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var name = form.elements.name.value.trim();
+      var from = form.elements.email.value.trim();
+      var message = form.elements.message.value.trim();
+      if (!message) {
+        note.textContent = "Write a short message first.";
+        note.className = "form-note error";
+        form.elements.message.focus();
+        return;
+      }
+      var body = message + (name || from ? "\n\n" + [name, from].filter(Boolean).join(", ") : "");
+      var subject = "Hello from " + (name || "your portfolio");
+      note.textContent = "Opening your email app with a draft.";
+      note.className = "form-note";
+      window.location.href = "mailto:" + EMAIL + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+    });
+  }
 
+  // ---------------------------------------------------------------
+  // Timeline: place the five dots on the winding path.
+  // ---------------------------------------------------------------
+  var tl = document.getElementById("tl");
+  var tlPath = document.getElementById("tl-line");
+  function placeDots() {
+    if (!tl || !tlPath) return;
+    var dots = tl.querySelectorAll(".tl-dot");
+    var total = tlPath.getTotalLength();
+    dots.forEach(function (dot, i) {
+      var targetX = 1000 * (0.1 + i * 0.2);
+      var lo = 0, hi = total;
+      for (var k = 0; k < 30; k++) {
+        var mid = (lo + hi) / 2;
+        if (tlPath.getPointAtLength(mid).x < targetX) lo = mid; else hi = mid;
+      }
+      var pt = tlPath.getPointAtLength((lo + hi) / 2);
+      dot.style.left = (pt.x / 1000 * 100) + "%";
+      dot.style.top = (pt.y / 120 * 100) + "%";
+      dot.style.setProperty("--d", String(i));
+    });
+    tl.style.setProperty("--len", String(Math.ceil(total)));
+  }
+  placeDots();
+
+  // ---------------------------------------------------------------
+  // Footer bridge: a line drawing generated from a cable curve.
+  // ---------------------------------------------------------------
+  var bridge = document.getElementById("bridge");
+  if (bridge) {
+    var NS = "http://www.w3.org/2000/svg";
+    var parts = [];
+    function add(d) { parts.push('<path d="' + d + '"/>'); }
+    var deck = 128, towerL = 300, towerR = 900, towerTop = 28;
+    add("M0," + deck + " H1200");
+    add("M0," + (deck + 8) + " H1200");
+    [towerL, towerR].forEach(function (x) {
+      add("M" + (x - 9) + "," + deck + " V" + towerTop);
+      add("M" + (x + 9) + "," + deck + " V" + towerTop);
+      add("M" + (x - 9) + "," + (towerTop + 22) + " H" + (x + 9));
+      add("M" + (x - 9) + "," + (towerTop + 58) + " H" + (x + 9));
+      add("M" + (x - 9) + "," + towerTop + " H" + (x + 9));
+    });
+    add("M0,104 L" + towerL + "," + (towerTop + 4));
+    add("M" + towerR + "," + (towerTop + 4) + " L1200,104");
+    add("M" + towerL + "," + (towerTop + 4) + " Q600,190 " + towerR + "," + (towerTop + 4));
+    for (var x = towerL + 24; x < towerR; x += 24) {
+      var t = (x - towerL) / (towerR - towerL);
+      var y = (1 - t) * (1 - t) * (towerTop + 4) + 2 * (1 - t) * t * 190 + t * t * (towerTop + 4);
+      add("M" + x + "," + y.toFixed(1) + " V" + deck);
+    }
+    for (var xb = 24; xb < towerL - 10; xb += 24) {
+      var yb = 104 - (104 - (towerTop + 4)) * (xb / towerL);
+      add("M" + xb + "," + yb.toFixed(1) + " V" + deck);
+    }
+    for (var xr = towerR + 24; xr < 1190; xr += 24) {
+      var yr = (towerTop + 4) + (104 - (towerTop + 4)) * ((xr - towerR) / (1200 - towerR));
+      add("M" + xr + "," + yr.toFixed(1) + " V" + deck);
+    }
+    add("M0,148 q 20,-6 40,0 t 40,0 t 40,0 t 40,0 t 40,0 t 40,0 t 40,0 t 40,0 t 40,0 t 40,0 t 40,0 t 40,0 t 40,0 t 40,0 t 40,0 t 40,0 t 40,0 t 40,0 t 40,0 t 40,0 t 40,0 t 40,0 t 40,0 t 40,0 t 40,0 t 40,0 t 40,0 t 40,0 t 40,0 t 40,0");
+    bridge.innerHTML = parts.join("");
+    bridge.setAttribute("xmlns", NS);
+  }
+
+  // ---------------------------------------------------------------
+  // Measured results count up once, when first seen.
+  // The final values are already in the HTML.
+  // ---------------------------------------------------------------
+  var counters = document.querySelectorAll("[data-count]");
   function countUp(el) {
     var target = parseFloat(el.getAttribute("data-count"));
     var decimals = parseInt(el.getAttribute("data-decimals") || "0", 10);
     var suffix = el.getAttribute("data-suffix") || "";
     var start = null;
-    var duration = 1100;
     function frame(ts) {
       if (start === null) start = ts;
-      var t = Math.min((ts - start) / duration, 1);
+      var t = Math.min((ts - start) / 1100, 1);
       var eased = 1 - Math.pow(1 - t, 3);
       el.textContent = (target * eased).toFixed(decimals) + suffix;
       if (t < 1) requestAnimationFrame(frame);
@@ -158,17 +270,53 @@
     requestAnimationFrame(frame);
   }
 
-  // ---------------------------------------------------------------
-  // Motion layer. Everything below is skipped when the visitor asks
-  // for reduced motion; the page then reads as a static document.
-  // ---------------------------------------------------------------
+  // The watermark is the owner's own profile data, shown as faint JSON.
+  var profileJson = [
+    '{',
+    '  "name": "Anant Shukla",',
+    '  "role": "Applied ML & GenAI engineer",',
+    '  "education": {',
+    '    "degree": "B.Tech, Civil Engineering",',
+    '    "university": "IIT Roorkee",',
+    '    "graduating": 2027,',
+    '    "cgpa": 7.405',
+    '  },',
+    '  "experience": [',
+    '    { "role": "Gen AI Intern", "org": "AI Velocity", "year": 2026 },',
+    '    { "role": "Summer Intern", "org": "VK Global Publications", "year": 2025 },',
+    '    { "role": "ML Intern", "org": "Eazeplace", "year": 2025 },',
+    '    { "role": "Co-Founder", "org": "Updesha Conxultancy" }',
+    '  ],',
+    '  "focus": ["LLM fine-tuning", "RAG", "Agents", "Computer vision"],',
+    '  "projects": {',
+    '    "NES": "7B LLM for next edit suggestion",',
+    '    "review": "RAG over a codebase",',
+    '    "papers": "LangGraph fact-checker",',
+    '    "llmscope": "forward-pass tracing in C++14"',
+    '  },',
+    '  "skills": {',
+    '    "languages": ["Python", "C++", "SQL"],',
+    '    "ml": ["PyTorch", "scikit-learn", "XGBoost", "YOLO"],',
+    '    "build": ["FastAPI", "React", "Git", "Power BI"]',
+    '  },',
+    '  "publication": "WCTR 2026, cyclist lateral position",',
+    '  "email": "' + EMAIL + '",',
+    '  "github": "github.com/mranantshukla",',
+    '  "linkedin": "linkedin.com/in/anantastic"',
+    '}'
+  ];
+  var glyph = document.getElementById("glyph-bg");
 
-  // Split an element's text into letters, each inside a clipped window.
+  // ---------------------------------------------------------------
+  // Motion layer. Skipped entirely when the visitor asks for reduced
+  // motion; the page is then a static document.
+  // ---------------------------------------------------------------
   function splitLetters(el) {
     var label = el.textContent.replace(/\s+/g, " ").trim();
     if (/^(H1|H2|A)$/.test(el.tagName)) el.setAttribute("aria-label", label);
     var frag = document.createDocumentFragment();
     var index = 0;
+    var word = null;
     function addLetter(content, isNode) {
       var win = document.createElement("span");
       win.className = "win";
@@ -178,12 +326,18 @@
       ch.style.setProperty("--i", String(index++));
       if (isNode) ch.appendChild(content); else ch.textContent = content;
       win.appendChild(ch);
-      frag.appendChild(win);
+      if (!word) {
+        word = document.createElement("span");
+        word.className = "word";
+        frag.appendChild(word);
+      }
+      word.appendChild(win);
     }
     Array.prototype.slice.call(el.childNodes).forEach(function (node) {
       if (node.nodeType === 3) {
         Array.from(node.textContent.replace(/\s+/g, " ")).forEach(function (c) {
           if (c === " ") {
+            word = null;
             var sp = document.createElement("span");
             sp.className = "sp";
             sp.setAttribute("aria-hidden", "true");
@@ -193,6 +347,7 @@
           }
         });
       } else if (node.nodeName === "BR") {
+        word = null;
         frag.appendChild(document.createElement("br"));
       } else {
         addLetter(node.cloneNode(true), true);
@@ -202,8 +357,15 @@
     el.appendChild(frag);
   }
 
-  if (!reduceMotion) {
-    // 1. Wordmark: letters flip on hover.
+  var hero = document.getElementById("top");
+  var flip = document.getElementById("portrait-flip");
+  var cornerTag = document.getElementById("corner-tag");
+
+  if (reduceMotion) {
+    if (glyph) glyph.textContent = profileJson.join("\n");
+    if (tl) tl.classList.add("in");
+  } else {
+    // 1. Wordmark letters flip on hover.
     var wordmark = document.querySelector(".wordmark");
     if (wordmark) splitLetters(wordmark);
 
@@ -216,31 +378,29 @@
       wrap.setAttribute("aria-hidden", "true");
       var track = document.createElement("span");
       track.className = "wave-track";
-      var twin = svg.cloneNode(true);
       btn.replaceChild(wrap, svg);
       track.appendChild(svg);
-      track.appendChild(twin);
+      track.appendChild(svg.cloneNode(true));
       wrap.appendChild(track);
     });
 
-    // 3. Letter-by-letter reveals: hero name, section headings, footer name.
+    // 3. Letter-by-letter reveals.
     var revealLetters = [];
     var heroName = document.querySelector(".name");
     if (heroName) {
       splitLetters(heroName);
       heroName.classList.add("letters");
-      // Let the browser paint the hidden state first, then play the entrance.
       requestAnimationFrame(function () {
         requestAnimationFrame(function () { heroName.classList.add("in"); });
       });
     }
-    document.querySelectorAll(".sheet-head h2, .footer-name").forEach(function (el) {
+    document.querySelectorAll(".display, .closing").forEach(function (el) {
       splitLetters(el);
       el.classList.add("letters");
       revealLetters.push(el);
     });
 
-    // 4. Menu: links rise letter by letter each time it opens.
+    // 4. Menu links rise letter by letter each time the menu opens.
     var menuLinks = document.querySelectorAll(".nav-links a");
     menuLinks.forEach(function (a, n) {
       splitLetters(a);
@@ -250,9 +410,7 @@
     if (navDialog && menuBtn) {
       menuBtn.addEventListener("click", function () {
         requestAnimationFrame(function () {
-          requestAnimationFrame(function () {
-            menuLinks.forEach(function (a) { a.classList.add("in"); });
-          });
+          requestAnimationFrame(function () { menuLinks.forEach(function (a) { a.classList.add("in"); }); });
         });
       });
       navDialog.addEventListener("close", function () {
@@ -260,22 +418,24 @@
       });
     }
 
-    // 5. Scroll reveals for rows and blocks (staggered inside each group).
+    // 5. Blocks fade up as they scroll into view, staggered in groups.
     var groups = [
-      ".work-list > li", ".also-list > li", ".timeline > li",
-      ".skills > div", ".plain li", ".metrics > div",
-      ".sheet-head p", ".sheet-head .learn-more", ".contact-line", ".contact .actions"
+      ".folders > li", ".also-list > li", ".tl-list > li", ".tag-col", ".metrics > div",
+      ".about-copy", ".current", ".contact-copy > p", ".contact-copy .link-row", ".mail-form",
+      ".sec-head .hint", ".f-col"
     ];
     var blocks = [];
     groups.forEach(function (selector) {
-      var items = document.querySelectorAll(selector);
-      items.forEach(function (item, n) {
-        item.style.setProperty("--n", String(Math.min(n, 6)));
+      document.querySelectorAll(selector).forEach(function (item, n) {
+        item.style.setProperty("--n", String(Math.min(n, 7)));
         item.classList.add("will-reveal");
         blocks.push(item);
       });
     });
+    if (tl) tl.classList.add("js-tl");
 
+    var observed = revealLetters.concat(blocks);
+    if (tl) observed.push(tl);
     if ("IntersectionObserver" in window) {
       var revealer = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
@@ -285,107 +445,79 @@
           }
         });
       }, { threshold: 0.2, rootMargin: "0px 0px -6% 0px" });
-      revealLetters.concat(blocks).forEach(function (el) { revealer.observe(el); });
+      observed.forEach(function (el) { revealer.observe(el); });
+
+      if (counters.length) {
+        var counterObserver = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              countUp(entry.target);
+              counterObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.6 });
+        counters.forEach(function (el) { counterObserver.observe(el); });
+      }
     } else {
-      revealLetters.concat(blocks).forEach(function (el) { el.classList.add("in"); });
+      observed.forEach(function (el) { el.classList.add("in"); });
     }
 
-    // 6. Hero code texture: typed in once, then drifts slower than the page.
-    var glyph = document.getElementById("glyph-bg");
+    // 6. Hero watermark types in, then the corner tag types its label.
     if (glyph) {
-      var codeLines = [
-        "retriever = VectorStore.from_documents(chunks, embedder)",
-        "for stage in post_training_stages:",
-        "    model = finetune(model, data[stage], lr=schedule(stage))",
-        "gain = evaluate(model, 'CCEval') - baseline",
-        "",
-        "frame = read_frame(video)",
-        "edges = scanline_edges(denoise(frame))",
-        "lane = ransac(edges, residual_threshold=2.0)",
-        "detections = yolo.predict(frame, conf=0.25)",
-        "",
-        "graph = StateGraph(papers, claims, verdicts)",
-        "graph.add_edge('search', 'fact_check')",
-        "summary = llm.invoke(prompt, context=verified)",
-        "",
-        "def plan_day(schedule, assignments):",
-        "    context = retrieve(syllabus_index, assignments)",
-        "    return agent.run(schedule, context)",
-        "",
-        "yield_curve = cir_model.fit(maturities, rates)",
-        "r2 = score(yield_curve.predict(r_3m), observed)",
-        "",
-        "trace = hook(model.forward, layers=all)",
-        "print(trace.latency_per_layer)",
-        "",
-        "X, y = smote.fit_resample(features, default_flag)",
-        "clf = XGBClassifier().fit(X, y)",
-        "recall = recall_score(y_test, clf.predict(X_test))"
-      ];
       var lineNo = 0;
       glyph.classList.add("typing");
       var typer = setInterval(function () {
-        if (lineNo >= codeLines.length) {
+        if (lineNo >= profileJson.length) {
           clearInterval(typer);
           glyph.classList.remove("typing");
           return;
         }
-        glyph.textContent += (lineNo ? "\n" : "") + codeLines[lineNo];
+        glyph.textContent += (lineNo ? "\n" : "") + profileJson[lineNo];
         lineNo += 1;
-      }, 110);
+      }, 90);
+    }
+    if (cornerTag) {
+      var full = cornerTag.textContent;
+      cornerTag.textContent = "";
+      cornerTag.classList.add("typing");
+      var pos = 0;
+      setTimeout(function () {
+        var tagTimer = setInterval(function () {
+          pos += 1;
+          cornerTag.textContent = full.slice(0, pos);
+          if (pos >= full.length) {
+            clearInterval(tagTimer);
+            setTimeout(function () { cornerTag.classList.remove("typing"); }, 1400);
+          }
+        }, 55);
+      }, 900);
     }
 
-    // 7. Scroll-linked: portrait flips to colour, code texture drifts.
-    var hero = document.getElementById("top");
-    var flip = document.getElementById("portrait-flip");
+    // 7. Scroll-linked: portrait flips to colour, watermark drifts slower than the page.
     var ticking = false;
     function updateScroll() {
       ticking = false;
       var y = window.scrollY;
-      var span = hero ? hero.offsetHeight * 0.85 : 1;
+      var span = hero ? hero.offsetHeight * 0.7 : 1;
       var p = Math.min(Math.max(y / span, 0), 1);
       if (flip) {
         flip.style.setProperty("--ry", (p * 180).toFixed(1) + "deg");
         flip.style.setProperty("--p", p.toFixed(3));
       }
-      if (glyph && y < (hero ? hero.offsetHeight * 1.5 : 1200)) {
-        glyph.style.transform = "translateY(" + (y * -0.14).toFixed(1) + "px)";
+      if (glyph && hero && y < hero.offsetHeight * 1.4) {
+        glyph.style.transform = "translateY(" + (y * 0.18).toFixed(1) + "px)";
       }
     }
     window.addEventListener("scroll", function () {
       if (!ticking) { ticking = true; requestAnimationFrame(updateScroll); }
     }, { passive: true });
     updateScroll();
-
-    // 8. Theme switch fades colours instead of snapping.
-    if (themeBtn) {
-      themeBtn.addEventListener("click", function () {
-        root.classList.add("theming");
-        setTimeout(function () { root.classList.remove("theming"); }, 500);
-      });
-    }
-  } else {
-    // Reduced motion: show the code texture as static text.
-    var staticGlyph = document.getElementById("glyph-bg");
-    if (staticGlyph) {
-      staticGlyph.textContent = [
-        "retriever = VectorStore.from_documents(chunks, embedder)",
-        "model = finetune(model, data[stage], lr=schedule(stage))",
-        "lane = ransac(edges, residual_threshold=2.0)",
-        "graph = StateGraph(papers, claims, verdicts)"
-      ].join("\n");
-    }
   }
 
-  if (!reduceMotion && "IntersectionObserver" in window && counters.length) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          countUp(entry.target);
-          io.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.6 });
-    counters.forEach(function (el) { io.observe(el); });
+  // Pill shrink works with or without motion (only the width changes).
+  function onPillScroll() {
+    if (pill) pill.classList.toggle("compact", window.scrollY > 80);
   }
+  window.addEventListener("scroll", onPillScroll, { passive: true });
+  onPillScroll();
 })();

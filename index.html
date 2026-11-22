@@ -1,252 +1,323 @@
 <!doctype html>
-<html lang="en" data-theme="light">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Anant Shukla | Applied ML & GenAI Engineer</title>
-  <meta name="description" content="Anant Shukla, B.Tech Civil Engineering at IIT Roorkee (2027). Applied ML and GenAI work: LLM fine-tuning, RAG pipelines, agents, and computer vision.">
+  <meta name="description" content="Anant Shukla, final-year Civil Engineering student at IIT Roorkee (2027). Applied ML and GenAI work: LLM fine-tuning, RAG pipelines, agents, and computer vision.">
   <meta property="og:title" content="Anant Shukla | Applied ML & GenAI Engineer">
   <meta property="og:description" content="LLM fine-tuning, RAG, agents and computer vision, with measured results.">
   <meta property="og:type" content="website">
-  <meta name="theme-color" content="#E7E8E4">
+  <meta name="theme-color" content="#141414">
   <link rel="icon" href="assets/headshot.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400..800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <a class="skip-link" href="#work">Skip to work</a>
+  <a class="skip-link" href="#about">Skip to content</a>
 
-  <header class="site-header">
-    <div class="frame header-inner">
-      <a class="wordmark" href="#top">Anant Shukla</a>
-      <nav class="top-nav" aria-label="Primary">
-        <a href="#work">Work</a>
-        <a href="#experience">Experience</a>
-        <a href="#skills">Skills</a>
-        <a href="#contact">Contact</a>
-      </nav>
-      <div class="header-tools">
-        <a class="tool" href="https://github.com/mranantshukla" target="_blank" rel="noopener noreferrer" data-tip="GitHub" aria-label="GitHub">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .3a12 12 0 0 0-3.8 23.4c.6.1.8-.3.8-.6v-2c-3.3.7-4-1.6-4-1.6-.6-1.4-1.4-1.8-1.4-1.8-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.7-.3-5.5-1.3-5.5-6 0-1.2.5-2.3 1.3-3.1-.2-.4-.6-1.6 0-3.2 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17.3 4.7 18.3 5 18.3 5c.6 1.6.2 2.8.1 3.2.8.8 1.3 1.9 1.3 3.1 0 4.7-2.8 5.7-5.5 6 .4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A12 12 0 0 0 12 .3z"/></svg>
-        </a>
-        <a class="tool" href="https://www.linkedin.com/in/anantastic/" target="_blank" rel="noopener noreferrer" data-tip="LinkedIn" aria-label="LinkedIn">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.4 20.5h-3.6v-5.6c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9v5.7H9.4V9h3.4v1.6c.5-.9 1.6-1.8 3.4-1.8 3.6 0 4.3 2.4 4.3 5.5v6.2zM5.3 7.4a2.1 2.1 0 1 1 0-4.1 2.1 2.1 0 0 1 0 4.1zM7.1 20.5H3.6V9h3.5v11.5z"/></svg>
-        </a>
-        <a class="tool" href="mailto:anant_s@ce.iitr.ac.in" data-tip="Email" aria-label="Email">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14"/><path d="m3 7 9 6 9-6"/></svg>
-        </a>
-        <button class="tool theme" id="theme-toggle" type="button" aria-label="Switch light and dark theme" aria-pressed="false" data-tip="Theme">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
-        </button>
-        <button class="tool menu" id="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-dialog">Menu</button>
-      </div>
+  <!-- Floating pill navigation -->
+  <header class="pill" id="pill">
+    <a class="wordmark" href="#top" aria-label="Anant Shukla, home">Anant</a>
+    <div class="pill-tools">
+      <button class="tool" id="theme-toggle" type="button" aria-label="Swap light and dark sections" aria-pressed="false" data-tip="Theme">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </button>
+      <button class="tool tool-fill" id="menu-toggle" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="nav-dialog" data-tip="Menu">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg>
+      </button>
     </div>
   </header>
 
-  <dialog id="nav-dialog" class="nav-dialog" aria-label="Menu">
+  <dialog id="nav-dialog" class="nav-dialog" data-tone="dark" aria-label="Menu">
     <div class="nav-panel">
       <button class="close" type="button" data-close-nav aria-label="Close menu">Close</button>
-      <nav class="nav-links" aria-label="Mobile">
-        <a href="#work">Work</a>
-        <a href="#experience">Experience</a>
+      <nav class="nav-links" aria-label="Sections">
+        <a href="#about">About</a>
         <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
         <a href="#contact">Contact</a>
       </nav>
-      <p class="nav-mail"><a href="mailto:anant_s@ce.iitr.ac.in">anant_s@ce.iitr.ac.in</a></p>
+      <div class="nav-foot">
+        <a href="mailto:anant_s@ce.iitr.ac.in">anant_s@ce.iitr.ac.in</a>
+        <div class="link-row">
+          <a href="assets/resume.pdf" target="_blank" rel="noopener">Resume</a>
+          <a href="https://github.com/mranantshukla" target="_blank" rel="noopener noreferrer">GitHub</a>
+          <a href="https://www.linkedin.com/in/anantastic/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        </div>
+      </div>
     </div>
   </dialog>
 
   <main id="main">
-    <!-- Hero: the drawing sheet's title block -->
-    <section id="top" class="hero frame">
+    <!-- Hero (dark) -->
+    <section id="top" class="hero" data-tone="dark">
       <pre class="glyph-bg" id="glyph-bg" aria-hidden="true"></pre>
-      <div class="hero-main">
-        <p class="role">Applied ML &amp; GenAI engineer</p>
-        <h1 class="name">Anant<br>Shukla<span class="stop">.</span></h1>
-        <p class="lede">I build LLM systems, retrieval pipelines and computer vision models, from fine-tuning a model to the app around it. Civil engineering student at IIT Roorkee, class of 2027.</p>
-        <div class="actions">
-          <a class="btn btn-solid" href="mailto:anant_s@ce.iitr.ac.in">Hire me</a>
-          <a class="btn" href="assets/resume.pdf" target="_blank" rel="noopener">Resume</a>
-          <a class="btn btn-quiet" href="https://github.com/mranantshukla" target="_blank" rel="noopener noreferrer">GitHub</a>
+      <div class="frame hero-inner">
+        <div class="corners" aria-hidden="true">
+          <span class="corner-year">&copy;2026</span>
+          <span class="corner-tag" id="corner-tag">{{ /APPLIED ML &amp; GENAI }}</span>
         </div>
+        <h1 class="name">ANANT SHUKLA</h1>
+        <figure class="portrait">
+          <div class="flip" id="portrait-flip">
+            <img class="face front" src="assets/headshot.jpg" alt="Portrait of Anant Shukla" width="1087" height="1085" decoding="async">
+            <img class="face back" src="assets/headshot.jpg" alt="" aria-hidden="true" width="1087" height="1085" decoding="async">
+          </div>
+        </figure>
+        <div class="hero-foot">
+          <p class="lede">I build LLM systems, retrieval pipelines and computer vision models, from fine-tuning a model to the app around it.</p>
+          <div class="actions">
+            <a class="btn btn-fill" href="mailto:anant_s@ce.iitr.ac.in">Hire me <span class="arrow" aria-hidden="true">&#8599;</span></a>
+            <a class="btn" href="assets/resume.pdf" target="_blank" rel="noopener">Resume <span class="arrow" aria-hidden="true">&#8599;</span></a>
+          </div>
+        </div>
+        <dl class="metrics" aria-label="Measured results">
+          <div><dt>CCEval gain</dt><dd data-count="3.94" data-suffix="%" data-decimals="2">3.94%</dd><dd class="note">From fine-tuning a 7B model on a proprietary codebase</dd></div>
+          <div><dt>mAP50</dt><dd data-count="93" data-suffix="%">93%</dd><dd class="note">Eight-class urban vehicle detection with YOLOv11n</dd></div>
+          <div><dt>Extraction</dt><dd data-count="95" data-suffix="%+">95%+</dd><dd class="note">Student ID parsing across 1,000+ cards</dd></div>
+          <div><dt>Out-of-sample R²</dt><dd data-count="0.85" data-decimals="2">0.85</dd><dd class="note">Yield curve reconstruction from a single rate</dd></div>
+        </dl>
       </div>
-      <figure class="portrait">
-        <div class="flip" id="portrait-flip">
-          <img class="face front" src="assets/headshot.jpg" alt="Portrait of Anant Shukla" width="1087" height="1085" decoding="async">
-          <img class="face back" src="assets/headshot.jpg" alt="" aria-hidden="true" width="1087" height="1085" decoding="async">
+    </section>
+
+    <!-- About (light) -->
+    <section id="about" class="sec" data-tone="light">
+      <div class="frame about-grid">
+        <h2 class="display">Hi, I'm Anant.</h2>
+        <div class="about-copy">
+          <p class="big">I'm a final-year Civil Engineering student at IIT Roorkee who builds applied ML and GenAI systems: fine-tuned LLMs, retrieval pipelines, agents and computer vision models. I like taking a model from an idea to something that works on real data.</p>
+          <div class="actions">
+            <a class="btn btn-fill" href="mailto:anant_s@ce.iitr.ac.in">Hire me <span class="arrow" aria-hidden="true">&#8599;</span></a>
+            <a class="btn" href="assets/resume.pdf" target="_blank" rel="noopener">Read my resume <span class="arrow" aria-hidden="true">&#8599;</span></a>
+          </div>
+          <p class="pub">Publication: Anant Shukla, Prof. Indrajit Ghosh, &ldquo;Real-Time Cyclist Lateral Position Detection using CV,&rdquo; World Conference on Transportation Research (WCTR), 2026.</p>
         </div>
-        <figcaption>Anant Shukla, IIT Roorkee</figcaption>
-      </figure>
-    </section>
-
-    <!-- Measured results -->
-    <section class="results frame" aria-label="Measured results">
-      <dl class="metrics">
-        <div><dt>CCEval gain</dt><dd data-count="3.94" data-suffix="%" data-decimals="2">3.94%</dd><dd class="note">From fine-tuning a 7B model on a proprietary codebase</dd></div>
-        <div><dt>mAP50</dt><dd data-count="93" data-suffix="%">93%</dd><dd class="note">Eight-class urban vehicle detection, YOLOv11n</dd></div>
-        <div><dt>Extraction</dt><dd data-count="95" data-suffix="%+">95%+</dd><dd class="note">Student ID parsing across 1,000+ cards</dd></div>
-        <div><dt>Out-of-sample R²</dt><dd data-count="0.85" data-decimals="2">0.85</dd><dd class="note">Yield curve reconstruction from a single rate</dd></div>
-      </dl>
-    </section>
-
-    <!-- Work: rows, not cards -->
-    <section id="work" class="sheet frame">
-      <header class="sheet-head">
-        <h2>Work</h2>
-        <p>Select a row for the details.</p>
-      </header>
-      <ul class="work-list">
-        <li><button class="work-row" type="button" data-project="nes">
-          <span class="w-year">2026</span>
-          <span class="w-name">Next Edit Suggestion model</span>
-          <span class="w-desc">Fine-tuned a 7B LLM for an in-house IDE, through three post-training stages.</span>
-          <span class="w-stack">PyTorch · LLM · Fine-tuning</span>
-          <span class="w-go" aria-hidden="true">Details <span class="arrow">&rarr;</span></span>
-        </button></li>
-        <li><button class="work-row" type="button" data-project="review">
-          <span class="w-year">2026</span>
-          <span class="w-name">LLM code review agent</span>
-          <span class="w-desc">RAG over a codebase that flags bugs and style violations in pull requests.</span>
-          <span class="w-stack">RAG · Agents · Python</span>
-          <span class="w-go" aria-hidden="true">Details <span class="arrow">&rarr;</span></span>
-        </button></li>
-        <li><button class="work-row" type="button" data-project="papers">
-          <span class="w-year">2026</span>
-          <span class="w-name">Research paper summarizer &amp; fact-checker</span>
-          <span class="w-desc">LangGraph agent that collates recent papers and checks their claims.</span>
-          <span class="w-stack">LangGraph · OpenAI API · Semantic Scholar</span>
-          <span class="w-go" aria-hidden="true">Details <span class="arrow">&rarr;</span></span>
-        </button></li>
-        <li><button class="work-row" type="button" data-project="campus">
-          <span class="w-year">2026</span>
-          <span class="w-name">Smart campus assistant</span>
-          <span class="w-desc">Course and deadline tracker with a LangChain study planner and syllabus RAG.</span>
-          <span class="w-stack">React · FastAPI · ChromaDB</span>
-          <span class="w-go" aria-hidden="true">Details <span class="arrow">&rarr;</span></span>
-        </button></li>
-        <li><button class="work-row" type="button" data-project="cyclist">
-          <span class="w-year">2026</span>
-          <span class="w-name">Cyclist lateral position detection</span>
-          <span class="w-desc">Real-time computer vision on monocular video. Accepted at WCTR 2026.</span>
-          <span class="w-stack">OpenCV · RANSAC · Computer vision</span>
-          <span class="w-go" aria-hidden="true">Details <span class="arrow">&rarr;</span></span>
-        </button></li>
-        <li><button class="work-row" type="button" data-project="llmscope">
-          <span class="w-year">2026</span>
-          <span class="w-name">llmscope</span>
-          <span class="w-desc">C++14 tool that traces a local model's forward pass and shows it live.</span>
-          <span class="w-stack">C++14 · Profiling · TUI</span>
-          <span class="w-go" aria-hidden="true">Details <span class="arrow">&rarr;</span></span>
-        </button></li>
-      </ul>
-
-      <h3 class="also">Also built</h3>
-      <ul class="also-list">
-        <li><strong>Swiggy Sense</strong>GenAI food agent with an eight-stage pipeline. Modeled a 7.6x ROI case.</li>
-        <li><strong>LiDAR tailgating detection</strong>Point-cloud perception for unsafe following distance at toll barriers.</li>
-        <li><strong>Credit risk model</strong>SMOTE with logistic regression and XGBoost on 30k+ records. 0.91 recall.</li>
-        <li><strong>Flight delay prediction</strong>180k+ flight records, 21 features. 86% accurate model.</li>
-        <li><strong>Customer intelligence</strong>Python, SQL and Power BI pipeline for a D2C brand's 3,900 customers.</li>
-        <li><strong>Autoreply email agent</strong>Intent routing and prompt chaining. Ambiguous queries go to a person.</li>
-      </ul>
-    </section>
-
-    <!-- Experience: dates are the sequence -->
-    <section id="experience" class="sheet frame">
-      <header class="sheet-head">
-        <h2>Experience</h2>
-        <a class="learn-more" href="#skills">Learn more about my skills <span class="arrow" aria-hidden="true">&rarr;</span></a>
-      </header>
-      <ol class="timeline">
-        <li class="current">
-          <time>May–Jul 2026</time>
-          <div>
-            <h3>Gen AI Intern <span>AI Velocity</span></h3>
-            <p>Fine-tuned 7B LLMs across three post-training stages for a Next Edit Suggestion model. CCEval accuracy up 3.94%, Zeta Eval up 5.21%, with CCEval regression held to 0.91%.</p>
-          </div>
-        </li>
-        <li>
-          <time>May–Jul 2025</time>
-          <div>
-            <h3>Summer Intern <span>VK Global Publications</span></h3>
-            <p>Analyzed Amazon sales with SQL and deployed segment strategies that lifted sales 18%. Ran cohort analysis and A/B tests for budgeting.</p>
-          </div>
-        </li>
-        <li>
-          <time>Dec 2024–Jan 2025</time>
-          <div>
-            <h3>Machine Learning Intern <span>Eazeplace</span></h3>
-            <p>Built an ATS score calculator with Naive Bayes and TF-IDF, reaching 89%+ match accuracy. Built a student ID parser with OCR, ML and LLMs.</p>
-          </div>
-        </li>
-        <li>
-          <time>Dec 2023–Present</time>
-          <div>
-            <h3>Co-Founder <span>Updesha Conxultancy Pvt. Ltd</span></h3>
-            <p>Co-founded an early-stage education startup, leading strategy, operations and stakeholder management.</p>
-          </div>
-        </li>
-      </ol>
-    </section>
-
-    <!-- Skills -->
-    <section id="skills" class="sheet frame">
-      <header class="sheet-head">
-        <h2>Skills</h2>
-      </header>
-      <dl class="skills">
-        <div><dt>Languages</dt><dd>Python, C++, SQL</dd></div>
-        <div><dt>GenAI and agents</dt><dd>RAG, LangChain, LangGraph, LLM APIs, prompt engineering, FAISS, ChromaDB, agentic pipelines</dd></div>
-        <div><dt>ML and vision</dt><dd>PyTorch, scikit-learn, XGBoost, SHAP, YOLO, OpenCV, Ultralytics</dd></div>
-        <div><dt>Build and data</dt><dd>FastAPI, React, REST APIs, Git, Power BI</dd></div>
-      </dl>
-      <div class="two-col">
-        <div>
-          <h3 class="also">Achievements</h3>
-          <ul class="plain">
-            <li>Top 3, Bring Your Own Projects 2026</li>
-            <li>IITR Heritage Excellence Award '24</li>
-            <li>1st rank, Policython Challenge '24</li>
-            <li>Guest speaker, Udaan 5.0 (7,500+ students)</li>
-            <li>Chess.com rapid rating 1533</li>
-          </ul>
-        </div>
-        <div>
-          <h3 class="also">Leadership</h3>
-          <ul class="plain">
-            <li>Overall Coordinator, Hostel Affairs Council (8,000+ residents)</li>
-            <li>Overall Finance Coordinator, Unnat Bharat Abhiyan (Rs. 5+ lakh CSR budget)</li>
-            <li>Joint Secretary, National Service Scheme (1,000+ volunteers)</li>
+        <div class="current">
+          <h3>Currently</h3>
+          <ul>
+            <li><strong>B.Tech, Civil Engineering</strong>IIT Roorkee, class of 2027</li>
+            <li><strong>Co-Founder</strong>Updesha Conxultancy Pvt. Ltd</li>
+            <li><strong>Overall Coordinator</strong>Hostel Affairs Council, 8,000+ residents</li>
           </ul>
         </div>
       </div>
     </section>
 
-    <!-- Contact -->
-    <section id="contact" class="contact frame">
-      <p class="contact-line">Looking for internships and full-time roles in applied ML, GenAI and data.</p>
-      <a class="contact-mail" href="mailto:anant_s@ce.iitr.ac.in">anant_s@ce.iitr.ac.in</a>
-      <div class="actions">
-        <a class="btn btn-solid" href="mailto:anant_s@ce.iitr.ac.in">Hire me</a>
-        <a class="btn" href="assets/resume.pdf" target="_blank" rel="noopener">Download resume</a>
+    <!-- Skills (light) -->
+    <section id="skills" class="sec sec-tight" data-tone="light">
+      <div class="frame">
+        <h2 class="display">Tech stack</h2>
+        <div class="tag-grid">
+          <div class="tag-col">
+            <h3>AI &amp; machine learning</h3>
+            <ul class="chips">
+              <li class="hl">LLMs</li><li class="hl">RAG</li><li>Agentic pipelines</li><li>LangChain</li><li>LangGraph</li><li>Prompt engineering</li>
+              <li class="hl">PyTorch</li><li>scikit-learn</li><li>XGBoost</li><li>SHAP</li><li>YOLO</li><li>OpenCV</li>
+            </ul>
+          </div>
+          <div class="tag-col">
+            <h3>Languages &amp; frameworks</h3>
+            <ul class="chips">
+              <li class="hl">Python</li><li>C++</li><li>SQL</li><li class="hl">FastAPI</li><li>React</li><li>REST APIs</li>
+            </ul>
+          </div>
+          <div class="tag-col">
+            <h3>Tools &amp; data</h3>
+            <ul class="chips">
+              <li>ChromaDB</li><li>FAISS</li><li>OpenAI API</li><li>Ultralytics</li><li>Power BI</li><li>Git</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Projects (dark) -->
+    <section id="projects" class="sec" data-tone="dark">
+      <div class="frame">
+        <header class="sec-head">
+          <h2 class="display">Featured projects</h2>
+          <p class="hint">Select a folder for the details.</p>
+        </header>
+        <ul class="folders">
+          <li><button class="folder" type="button" data-project="nes">
+            <span class="folder-card">
+              <span class="folder-sheets" aria-hidden="true"><span class="sheet s3"></span><span class="sheet s2"></span><span class="sheet s1"><span class="sheet-metric">+3.94%</span><span class="sheet-cap">CCEval</span></span></span>
+              <span class="folder-name">Next Edit Suggestion model</span>
+              <span class="folder-go" aria-hidden="true">&#8599;</span>
+            </span>
+            <span class="folder-meta"><span>LLM fine-tuning</span><span>View details &#8599;</span></span>
+          </button></li>
+          <li><button class="folder" type="button" data-project="review">
+            <span class="folder-card">
+              <span class="folder-sheets" aria-hidden="true"><span class="sheet s3"></span><span class="sheet s2"></span><span class="sheet s1"><span class="sheet-metric">RAG</span><span class="sheet-cap">over a codebase</span></span></span>
+              <span class="folder-name">LLM code review agent</span>
+              <span class="folder-go" aria-hidden="true">&#8599;</span>
+            </span>
+            <span class="folder-meta"><span>Agents</span><span>View details &#8599;</span></span>
+          </button></li>
+          <li><button class="folder" type="button" data-project="papers">
+            <span class="folder-card">
+              <span class="folder-sheets" aria-hidden="true"><span class="sheet s3"></span><span class="sheet s2"></span><span class="sheet s1"><span class="sheet-metric">LangGraph</span><span class="sheet-cap">fact-checker</span></span></span>
+              <span class="folder-name">Research paper summarizer</span>
+              <span class="folder-go" aria-hidden="true">&#8599;</span>
+            </span>
+            <span class="folder-meta"><span>Agents</span><span>View details &#8599;</span></span>
+          </button></li>
+          <li><button class="folder" type="button" data-project="campus">
+            <span class="folder-card">
+              <span class="folder-sheets" aria-hidden="true"><span class="sheet s3"></span><span class="sheet s2"></span><span class="sheet s1"><span class="sheet-metric">React</span><span class="sheet-cap">FastAPI, RAG</span></span></span>
+              <span class="folder-name">Smart campus assistant</span>
+              <span class="folder-go" aria-hidden="true">&#8599;</span>
+            </span>
+            <span class="folder-meta"><span>Full-stack</span><span>View details &#8599;</span></span>
+          </button></li>
+          <li><button class="folder" type="button" data-project="cyclist">
+            <span class="folder-card">
+              <span class="folder-sheets" aria-hidden="true"><span class="sheet s3"></span><span class="sheet s2"></span><span class="sheet s1"><span class="sheet-metric">WCTR</span><span class="sheet-cap">accepted 2026</span></span></span>
+              <span class="folder-name">Cyclist lateral position detection</span>
+              <span class="folder-go" aria-hidden="true">&#8599;</span>
+            </span>
+            <span class="folder-meta"><span>Computer vision</span><span>View details &#8599;</span></span>
+          </button></li>
+          <li><button class="folder" type="button" data-project="llmscope">
+            <span class="folder-card">
+              <span class="folder-sheets" aria-hidden="true"><span class="sheet s3"></span><span class="sheet s2"></span><span class="sheet s1"><span class="sheet-metric">C++14</span><span class="sheet-cap">live tracing</span></span></span>
+              <span class="folder-name">llmscope</span>
+              <span class="folder-go" aria-hidden="true">&#8599;</span>
+            </span>
+            <span class="folder-meta"><span>Tooling</span><span>View details &#8599;</span></span>
+          </button></li>
+          <li><button class="folder" type="button" data-project="swiggy">
+            <span class="folder-card">
+              <span class="folder-sheets" aria-hidden="true"><span class="sheet s3"></span><span class="sheet s2"></span><span class="sheet s1"><span class="sheet-metric">7.6x</span><span class="sheet-cap">modeled ROI</span></span></span>
+              <span class="folder-name">Swiggy Sense</span>
+              <span class="folder-go" aria-hidden="true">&#8599;</span>
+            </span>
+            <span class="folder-meta"><span>GenAI product</span><span>View details &#8599;</span></span>
+          </button></li>
+          <li><button class="folder" type="button" data-project="lidar">
+            <span class="folder-card">
+              <span class="folder-sheets" aria-hidden="true"><span class="sheet s3"></span><span class="sheet s2"></span><span class="sheet s1"><span class="sheet-metric">LiDAR</span><span class="sheet-cap">tailgating</span></span></span>
+              <span class="folder-name">Smart traffic enforcement</span>
+              <span class="folder-go" aria-hidden="true">&#8599;</span>
+            </span>
+            <span class="folder-meta"><span>Perception</span><span>View details &#8599;</span></span>
+          </button></li>
+        </ul>
+
+        <h3 class="subhead">Also built</h3>
+        <ul class="also-list">
+          <li><strong>Vehicle detection</strong>YOLOv11n on 5,300+ urban images, 93% mAP50, eight vehicle classes.</li>
+          <li><strong>Credit risk model</strong>SMOTE with logistic regression and XGBoost on 30k+ records. 0.91 recall.</li>
+          <li><strong>Flight delay prediction</strong>180k+ flight records, 21 features. 86% accurate model.</li>
+          <li><strong>Customer intelligence</strong>Python, SQL and Power BI pipeline for a D2C brand's 3,900 customers.</li>
+          <li><strong>Yield curve modeling</strong>Cox-Ingersoll-Ross with jump-diffusion. 0.85+ out-of-sample R².</li>
+          <li><strong>Autoreply email agent</strong>Intent routing and prompt chaining. Ambiguous queries go to a person.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Experience (dark) -->
+    <section id="experience" class="sec" data-tone="dark">
+      <div class="frame">
+        <h2 class="display">Experience<span class="period">.</span></h2>
+        <div class="tl" id="tl">
+          <div class="tl-track" aria-hidden="true">
+            <svg class="tl-svg" viewBox="0 0 1000 120" preserveAspectRatio="none" focusable="false">
+              <path id="tl-line" d="M0,60 C 80,10 160,110 250,60 S 420,10 500,60 S 660,110 750,60 S 920,10 1000,60" />
+            </svg>
+            <span class="tl-dot"></span><span class="tl-dot"></span><span class="tl-dot"></span><span class="tl-dot"></span><span class="tl-dot"></span>
+          </div>
+          <ol class="tl-list">
+            <li>
+              <time>2023 &ndash; 2027</time>
+              <h3>B.Tech, Civil Engineering</h3>
+              <p class="org">IIT Roorkee</p>
+              <p>CGPA 7.405/10. Machine learning and GenAI work through student clubs and the Civil Engineering department's research group.</p>
+              <span class="badge">Current</span>
+            </li>
+            <li>
+              <time>Dec 2023 &ndash; Present</time>
+              <h3>Co-Founder</h3>
+              <p class="org">Updesha Conxultancy Pvt. Ltd</p>
+              <p>Early-stage education startup. Strategy, operations and stakeholder management.</p>
+              <span class="badge">Ongoing</span>
+            </li>
+            <li>
+              <time>Dec 2024 &ndash; Jan 2025</time>
+              <h3>Machine Learning Intern</h3>
+              <p class="org">Eazeplace</p>
+              <p>ATS score calculator with Naive Bayes and TF-IDF (89%+ match accuracy). Student ID parser with OCR, ML and LLMs (95%+ extraction across 1,000+ cards).</p>
+            </li>
+            <li>
+              <time>May &ndash; Jul 2025</time>
+              <h3>Summer Intern</h3>
+              <p class="org">VK Global Publications</p>
+              <p>Analyzed Amazon sales with SQL and deployed segment strategies that lifted sales 18%. Cohort analysis and A/B tests for budgeting.</p>
+            </li>
+            <li>
+              <time>May &ndash; Jul 2026</time>
+              <h3>Gen AI Intern</h3>
+              <p class="org">AI Velocity</p>
+              <p>Fine-tuned 7B LLMs across three post-training stages for a Next Edit Suggestion model. CCEval +3.94%, Zeta Eval +5.21%, regression held to 0.91%.</p>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact (dark) -->
+    <section id="contact" class="sec" data-tone="dark">
+      <div class="frame contact-grid">
+        <div class="contact-copy">
+          <h2 class="display">Let's work together.</h2>
+          <p>Looking for internships and full-time roles in applied ML, GenAI and data. Write a message and your email app opens with a draft addressed to me.</p>
+          <div class="link-row">
+            <a href="https://www.linkedin.com/in/anantastic/" target="_blank" rel="noopener noreferrer">LinkedIn &#8599;</a>
+            <a href="https://github.com/mranantshukla" target="_blank" rel="noopener noreferrer">GitHub &#8599;</a>
+            <a href="assets/resume.pdf" target="_blank" rel="noopener">Resume &#8599;</a>
+          </div>
+        </div>
+        <form class="mail-form" id="mail-form" novalidate>
+          <label><span class="sr">Your name</span><input name="name" type="text" placeholder="Your name" autocomplete="name"></label>
+          <label><span class="sr">Your email</span><input name="email" type="email" placeholder="Your email" autocomplete="email"></label>
+          <label><span class="sr">Message</span><textarea name="message" rows="5" placeholder="What would you like to talk about?" required></textarea></label>
+          <p class="form-note" id="form-note" role="status"></p>
+          <button class="btn btn-fill" type="submit">Create email draft <span class="arrow" aria-hidden="true">&#8599;</span></button>
+        </form>
       </div>
     </section>
   </main>
 
-  <footer class="site-footer">
-    <div class="frame">
-      <div class="footer-name" aria-hidden="true">Anant Shukla</div>
+  <footer class="site-footer" data-tone="deep">
+    <div class="frame footer-grid">
+      <div class="f-brand">Anant.</div>
+      <nav class="f-col" aria-label="Footer">
+        <h3>Explore</h3>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+      </nav>
+      <div class="f-col">
+        <h3>Get in touch</h3>
+        <a href="mailto:anant_s@ce.iitr.ac.in">anant_s@ce.iitr.ac.in</a>
+      </div>
     </div>
-    <div class="frame footer-inner">
+    <div class="frame"><p class="closing" aria-hidden="true">Thanks for stopping by.</p></div>
+    <svg class="bridge" id="bridge" viewBox="0 0 1200 160" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false"></svg>
+    <div class="frame legal">
       <p>&copy; <span id="year"></span> Anant Shukla</p>
       <a class="to-top" href="#top">Back to top &uarr;</a>
     </div>
   </footer>
 
   <!-- Project details -->
-  <dialog id="project-dialog" class="project-dialog" aria-labelledby="pd-title">
+  <dialog id="project-dialog" class="project-dialog" data-tone="dark" aria-labelledby="pd-title">
     <div class="pd-inner">
       <button class="close" type="button" data-close aria-label="Close details">Close</button>
       <p class="pd-meta" id="pd-meta"></p>
