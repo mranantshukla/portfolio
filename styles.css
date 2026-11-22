@@ -181,6 +181,7 @@ button { font: inherit; color: inherit; }
 
 /* ---------- Hero ---------- */
 .hero {
+  position: relative;
   display: grid; gap: 40px;
   padding: clamp(40px, 8vw, 96px) 0 clamp(32px, 6vw, 72px);
 }
@@ -201,23 +202,28 @@ button { font: inherit; color: inherit; }
   margin-top: 28px; max-width: 46ch;
   font-size: clamp(1.05rem, 1rem + 0.3vw, 1.2rem); line-height: 1.55;
 }
-.portrait { margin: 0; justify-self: start; width: min(260px, 70vw); }
-.portrait img {
-  width: 100%; height: auto; aspect-ratio: 1; object-fit: cover;
-  border: 1px solid var(--ink);
-  filter: grayscale(1) contrast(1.05);
-  transition: filter 0.5s var(--ease);
+.portrait { margin: 0; justify-self: start; width: min(260px, 70vw); perspective: 1000px; position: relative; z-index: 1; }
+.flip {
+  position: relative; aspect-ratio: 1;
+  transform-style: preserve-3d;
+  transform: rotateY(var(--ry, 0deg)) scale(calc(1 - var(--p, 0) * 0.06));
+  will-change: transform;
 }
-.portrait:hover img { filter: grayscale(0); }
+.face {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; border: 1px solid var(--ink);
+  backface-visibility: hidden; -webkit-backface-visibility: hidden;
+}
+.face.front { filter: grayscale(1) contrast(1.05); }
+.face.back { transform: rotateY(180deg); }
 .portrait figcaption { margin-top: 8px; font-size: 0.82rem; color: var(--muted); }
 
 /* One orchestrated load: the name rises, then the metrics count up. */
 @media (prefers-reduced-motion: no-preference) {
-  .name, .lede, .actions, .role { animation: rise 0.9s var(--ease) both; }
+  .lede, .actions, .role { animation: rise 0.9s var(--ease) both; }
   .role { animation-delay: 0s; }
-  .name { animation-delay: 0.08s; }
-  .lede { animation-delay: 0.2s; }
-  .actions { animation-delay: 0.3s; }
+  .lede { animation-delay: 0.6s; }
+  .actions { animation-delay: 0.75s; }
   @keyframes rise {
     from { opacity: 0; transform: translateY(18px); }
     to { opacity: 1; transform: none; }
@@ -411,6 +417,79 @@ button { font: inherit; color: inherit; }
 /* ---------- Responsive small screens ---------- */
 @media (max-width: 380px) {
   .metrics { grid-template-columns: 1fr; }
+}
+
+/* =========================================================
+   Motion
+   Hidden states only exist once script.js adds the classes below,
+   and script.js adds them only when the visitor allows motion.
+   ========================================================= */
+
+/* Letter windows: each letter rises out of a clipped box. */
+.win {
+  display: inline-block; overflow: hidden; vertical-align: top;
+  padding: 0.12em 0 0.2em; margin: -0.12em 0 -0.2em;
+}
+.ch { display: inline-block; }
+.sp { display: inline-block; width: 0.2em; }
+.name { white-space: nowrap; }
+.letters .ch { transform: translateY(115%); }
+.letters.in .ch {
+  transform: none;
+  transition: transform 0.9s var(--ease);
+  transition-delay: calc(var(--base, 0) * 90ms + var(--i, 0) * 45ms);
+}
+
+/* Wordmark: letters flip over on hover. */
+.wordmark .win { overflow: visible; padding: 0; margin: 0; }
+.wordmark .ch { transition: transform 0.6s var(--ease); transition-delay: calc(var(--i, 0) * 25ms); }
+.wordmark:hover .ch, .wordmark:focus-visible .ch { transform: rotateX(360deg); }
+
+/* Icon buttons: the glyph slides out and its twin slides in. */
+.wave-icon { display: block; height: 18px; overflow: hidden; }
+.wave-track { display: flex; flex-direction: column; transition: transform 0.4s var(--ease); }
+.wave-track > svg { display: block; flex: none; }
+.tool:hover .wave-track, .tool:focus-visible .wave-track { transform: translateY(-18px); }
+
+/* Menu links: letters rise in one after another when the menu opens. */
+.nav-links .win { padding-bottom: 0.25em; margin-bottom: -0.25em; }
+
+/* Hero code texture: typed in once, then drifts slower than the page. */
+.glyph-bg {
+  position: absolute; inset: 0 0 0 46%; z-index: 0; margin: 0; overflow: hidden;
+  font: 12.5px/1.75 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color: var(--muted); opacity: 0.12; pointer-events: none; white-space: pre;
+  padding: 24px 0 0 0;
+  -webkit-mask-image: linear-gradient(to bottom, #000 25%, transparent 92%);
+          mask-image: linear-gradient(to bottom, #000 25%, transparent 92%);
+}
+.glyph-bg.typing::after { content: "\2588"; animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+.hero-main, .portrait { position: relative; z-index: 1; }
+
+/* Scroll reveals for rows and blocks (section fade). */
+.will-reveal { opacity: 0; transform: translateY(22px); }
+.will-reveal.in {
+  opacity: 1; transform: none;
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  transition-delay: calc(var(--n, 0) * 70ms);
+}
+
+/* Footer: the oversized name rises letter by letter. */
+.site-footer { padding-top: clamp(40px, 8vw, 96px); overflow: hidden; }
+.footer-name {
+  font-family: var(--display); font-weight: 800; font-stretch: 75%;
+  font-size: clamp(3rem, 1rem + 14vw, 12.5rem);
+  line-height: 0.82; letter-spacing: -0.02em; white-space: nowrap;
+  color: var(--ink);
+  margin-bottom: clamp(24px, 4vw, 48px);
+}
+.footer-name .win { transition: none; }
+.footer-name .win:hover .ch { transform: translateY(-8%); transition: transform 0.35s var(--ease); }
+
+/* Smooth colour change when the theme switches. */
+html.theming, html.theming *, html.theming *::before, html.theming *::after {
+  transition: background-color 0.45s ease, color 0.45s ease, border-color 0.45s ease !important;
 }
 
 /* ---------- Reduced motion ---------- */

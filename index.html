@@ -61,6 +61,7 @@
   <main id="main">
     <!-- Hero: the drawing sheet's title block -->
     <section id="top" class="hero frame">
+      <pre class="glyph-bg" id="glyph-bg" aria-hidden="true"></pre>
       <div class="hero-main">
         <p class="role">Applied ML &amp; GenAI engineer</p>
         <h1 class="name">Anant<br>Shukla<span class="stop">.</span></h1>
@@ -72,7 +73,10 @@
         </div>
       </div>
       <figure class="portrait">
-        <img src="assets/headshot.jpg" alt="Portrait of Anant Shukla" width="1087" height="1085" decoding="async">
+        <div class="flip" id="portrait-flip">
+          <img class="face front" src="assets/headshot.jpg" alt="Portrait of Anant Shukla" width="1087" height="1085" decoding="async">
+          <img class="face back" src="assets/headshot.jpg" alt="" aria-hidden="true" width="1087" height="1085" decoding="async">
+        </div>
         <figcaption>Anant Shukla, IIT Roorkee</figcaption>
       </figure>
     </section>
@@ -232,6 +236,9 @@
   </main>
 
   <footer class="site-footer">
+    <div class="frame">
+      <div class="footer-name" aria-hidden="true">Anant Shukla</div>
+    </div>
     <div class="frame footer-inner">
       <p>&copy; <span id="year"></span> Anant Shukla</p>
       <a class="to-top" href="#top">Back to top &uarr;</a>
