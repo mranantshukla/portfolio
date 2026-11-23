@@ -399,8 +399,52 @@ button, input, textarea { font: inherit; color: inherit; }
 .pd-inner .close { justify-self: end; }
 .pd-meta { font-size: var(--t-sm); color: var(--soft); }
 .pd-inner h3 { font-size: var(--t-2xl); line-height: var(--lead-tight); letter-spacing: var(--track-snug); }
-.pd-inner ul { display: grid; gap: var(--sp-3); padding-left: 1.1em; list-style: disc; color: var(--soft); }
-.pd-stack { padding-top: var(--sp-3); border-top: 1px solid var(--line); font-size: var(--t-sm); }
+.pd-points { display: grid; gap: var(--sp-3); padding-left: 1.1em; list-style: disc; color: var(--soft); }
+.pd-top { display: flex; justify-content: space-between; align-items: center; gap: var(--sp-3); }
+.pd-count { font-size: var(--t-sm); color: var(--soft); }
+.pd-result {
+  font-size: var(--t-lg); font-weight: 600; letter-spacing: var(--track-snug); line-height: 1.2;
+  padding: var(--sp-2) 0 var(--sp-2) var(--sp-4); border-left: 2px solid var(--fg);
+}
+.pd-chips { padding-top: var(--sp-4); border-top: 1px solid var(--line); }
+.pd-nav { display: flex; justify-content: space-between; gap: var(--sp-3); padding-top: var(--sp-2); }
+.pd-nav .close { align-self: auto; }
+.pd-chips li { cursor: default; }
+
+/* ---------- Reading progress and current section ---------- */
+.progress {
+  position: fixed; top: 0; left: 0; right: 0; height: 3px; z-index: 40;
+  background: #fff; mix-blend-mode: difference;
+  transform-origin: 0 50%; transform: scaleX(var(--prog, 0));
+}
+.pill-left { display: flex; align-items: baseline; gap: var(--sp-3); min-width: 0; }
+.pill-here {
+  font-size: var(--t-sm); color: rgb(244 241 236 / 0.55);
+  opacity: 0; transform: translateY(4px);
+  transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+  white-space: nowrap;
+}
+.pill-here.on { opacity: 1; transform: none; }
+@media (max-width: 479px) { .pill-here { display: none; } }
+
+/* ---------- Skills link to projects ---------- */
+.chips li.link { padding: 0; }
+.chips li.link button {
+  display: block; padding: 6px 14px; border: 0; border-radius: inherit;
+  background: none; color: inherit; font: inherit; cursor: pointer;
+}
+.chips li.link.active { box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--fg); }
+.skill-note { margin-top: var(--sp-5); min-height: 1.6em; color: var(--soft); font-size: var(--t-sm); }
+.skill-note a { color: var(--fg); }
+.skill-clear { border: 0; background: none; padding: 0; color: var(--fg); font: inherit; text-decoration: underline; cursor: pointer; }
+.folders > li, .also-list > li { transition: opacity 0.35s var(--ease); }
+.folders > li.is-dim, .also-list > li.is-dim { opacity: 0.2; }
+.folders > li.is-match .folder-card { border-color: var(--fg); box-shadow: var(--e3); }
+.also-list > li.is-match strong { text-decoration: underline; text-underline-offset: 4px; }
+
+/* ---------- About paragraph reads in as it scrolls ---------- */
+.js-words .big .w { opacity: 0.2; transition: opacity 0.35s ease; }
+.js-words .big .w.lit { opacity: 1; }
 
 /* ---------- Responsive ---------- */
 @media (max-width: 899px) {

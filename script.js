@@ -60,7 +60,8 @@
         "Built a Next Edit Suggestion model for an in-house IDE that learns organization-specific code patterns.",
         "CCEval accuracy up 3.94%. Zeta Eval up 5.21%, with CCEval regression held to 0.91%."
       ],
-      stack: "PyTorch, LLM fine-tuning, evaluation (CCEval, Zeta Eval)"
+      stack: ["LLM fine-tuning", "7B models", "CCEval", "Zeta Eval"],
+      result: "CCEval +3.94%, Zeta Eval +5.21%"
     },
     review: {
       meta: "Hostel Affairs Council, May to Jun 2026",
@@ -69,7 +70,7 @@
         "RAG-based agent that indexes a codebase for context-aware retrieval of prior code patterns.",
         "Flags bugs and style violations in pull requests against project-specific conventions."
       ],
-      stack: "RAG, agents, Python"
+      stack: ["RAG", "Agents", "Code review"]
     },
     papers: {
       meta: "VLG, IIT Roorkee, May to Jun 2026",
@@ -79,7 +80,7 @@
         "Web-search and citation-lookup tools check the claims in each collated paper.",
         "Summaries of verified papers with key findings and trends, generated with the OpenAI API."
       ],
-      stack: "LangGraph, Semantic Scholar API, OpenAI API"
+      stack: ["LangGraph", "Semantic Scholar API", "OpenAI API"]
     },
     campus: {
       meta: "VLG, IIT Roorkee, May to Jun 2026",
@@ -89,7 +90,7 @@
         "LangChain agent with schedule and assignment context that plans study days.",
         "RAG over uploaded syllabi using ChromaDB and the OpenAI API."
       ],
-      stack: "React, FastAPI, LangChain, ChromaDB, OpenAI API"
+      stack: ["React", "FastAPI", "LangChain", "ChromaDB", "OpenAI API"]
     },
     cyclist: {
       meta: "Accepted at WCTR 2026",
@@ -100,7 +101,8 @@
         "Replaced costly LiDAR and GPS sensors with a low-height camera, cutting fit error 15 to 25%.",
         "Co-authored with Prof. Indrajit Ghosh."
       ],
-      stack: "OpenCV, RANSAC, computer vision"
+      stack: ["Computer vision", "RANSAC", "Monocular video"],
+      result: "Fit error down 15 to 25%"
     },
     llmscope: {
       meta: "Google Developer Students Club, Jun to Jul 2026",
@@ -109,7 +111,7 @@
         "C++14 telemetry tool that hooks into a local model's forward pass without changing the model.",
         "Shows tensor shapes, activations and per-layer latency in an interactive terminal UI."
       ],
-      stack: "C++14, profiling, terminal UI"
+      stack: ["C++14", "Profiling", "Terminal UI"]
     },
     swiggy: {
       meta: "SocBiz, IIT Roorkee, May to Jun 2026",
@@ -119,7 +121,8 @@
         "Eight-stage agent pipeline (perceive, plan, guardrail, act, learn) that brings user decision time down to 30 seconds.",
         "Tiered revenue model from Rs. 746 cr to 2,385 cr with six risk mitigations, projecting 7.6x ROI at scale."
       ],
-      stack: "Agent design, product modeling, GenAI"
+      stack: ["Agent design", "Product modeling", "GenAI"],
+      result: "7.6x modeled ROI"
     },
     lidar: {
       meta: "CED, IIT Roorkee, from Aug 2026",
@@ -129,29 +132,46 @@
         "Processes point-cloud data to track vehicle spacing and flag unsafe following distance.",
         "Aims at a low-cost alternative to camera systems, which struggle with occlusion and glare."
       ],
-      stack: "LiDAR, point clouds, real-time perception"
+      stack: ["LiDAR", "Point clouds", "Real-time perception"]
     }
   };
 
+  var order = ["nes", "review", "papers", "campus", "cyclist", "llmscope", "swiggy", "lidar"];
+  var current = 0;
   var pd = document.getElementById("project-dialog");
   var pdMeta = document.getElementById("pd-meta");
   var pdTitle = document.getElementById("pd-title");
   var pdPoints = document.getElementById("pd-points");
   var pdStack = document.getElementById("pd-stack");
+  var pdResult = document.getElementById("pd-result");
+  var pdCount = document.getElementById("pd-count");
 
-  function openProject(key) {
-    var p = projects[key];
+  function showProject(index) {
+    current = (index + order.length) % order.length;
+    var p = projects[order[current]];
     if (!p || !pd) return;
+    pdCount.textContent = (current + 1) + " of " + order.length;
     pdMeta.textContent = p.meta;
     pdTitle.textContent = p.title;
+    pdResult.hidden = !p.result;
+    pdResult.textContent = p.result || "";
     pdPoints.innerHTML = "";
     p.points.forEach(function (text) {
       var li = document.createElement("li");
       li.textContent = text;
       pdPoints.appendChild(li);
     });
-    pdStack.textContent = p.stack;
-    pd.showModal();
+    pdStack.innerHTML = "";
+    p.stack.forEach(function (name) {
+      var li = document.createElement("li");
+      li.textContent = name;
+      pdStack.appendChild(li);
+    });
+  }
+  function openProject(key) {
+    if (!pd) return;
+    showProject(order.indexOf(key));
+    if (!pd.open) pd.showModal();
   }
   document.querySelectorAll("[data-project]").forEach(function (el) {
     el.addEventListener("click", function () { openProject(el.getAttribute("data-project")); });
@@ -159,7 +179,82 @@
   if (pd) {
     pd.querySelector("[data-close]").addEventListener("click", function () { pd.close(); });
     pd.addEventListener("click", function (e) { if (e.target === pd) pd.close(); });
+    document.getElementById("pd-prev").addEventListener("click", function () { showProject(current - 1); });
+    document.getElementById("pd-next").addEventListener("click", function () { showProject(current + 1); });
+    pd.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowLeft") { e.preventDefault(); showProject(current - 1); }
+      if (e.key === "ArrowRight") { e.preventDefault(); showProject(current + 1); }
+    });
   }
+
+  // ---------------------------------------------------------------
+  // Skills link to projects: pick a skill, the projects that use it light up.
+  // Tags come from what the resumes say each project used.
+  // ---------------------------------------------------------------
+  var projectTags = {
+    nes: ["llm"],
+    review: ["llm", "rag", "agents"],
+    papers: ["llm", "agents", "langgraph", "openai"],
+    campus: ["llm", "rag", "agents", "langchain", "openai", "chromadb", "fastapi", "react"],
+    cyclist: [],
+    llmscope: ["cpp"],
+    swiggy: ["llm", "agents"],
+    lidar: []
+  };
+  var alsoTags = [
+    ["yolo", "opencv", "pytorch", "ultralytics"], // vehicle detection
+    ["xgboost"],                                  // credit risk model
+    [],                                           // flight delay prediction
+    ["sql", "powerbi"],                           // customer intelligence
+    [],                                           // yield curve modeling
+    ["llm", "agents", "prompting"]                // autoreply email agent
+  ];
+  var folderItems = Array.prototype.slice.call(document.querySelectorAll(".folders > li"));
+  var alsoItems = Array.prototype.slice.call(document.querySelectorAll(".also-list > li"));
+  var linkedItems = folderItems.concat(alsoItems);
+  var linkedTags = folderItems.map(function (li) {
+    var btn = li.querySelector("[data-project]");
+    return (btn && projectTags[btn.getAttribute("data-project")]) || [];
+  }).concat(alsoItems.map(function (li, i) { return alsoTags[i] || []; }));
+
+  var skillButtons = Array.prototype.slice.call(document.querySelectorAll("[data-skill]"));
+  var skillNoteText = document.getElementById("skill-note-text");
+  var skillClear = document.getElementById("skill-clear");
+  var activeSkill = null;
+  var defaultNote = skillNoteText ? skillNoteText.textContent : "";
+
+  function applySkill(key, label) {
+    activeSkill = key;
+    skillButtons.forEach(function (b) {
+      b.parentNode.classList.toggle("active", !!key && b.getAttribute("data-skill") === key);
+    });
+    var count = 0;
+    linkedItems.forEach(function (li, i) {
+      var hit = !key || linkedTags[i].indexOf(key) > -1;
+      li.classList.toggle("is-dim", !!key && !hit);
+      li.classList.toggle("is-match", !!key && hit);
+      if (key && hit) count += 1;
+    });
+    if (!skillNoteText) return;
+    skillNoteText.textContent = "";
+    if (!key) {
+      skillNoteText.textContent = defaultNote;
+    } else {
+      skillNoteText.appendChild(document.createTextNode(count + (count === 1 ? " project uses " : " projects use ") + label + ". "));
+      var link = document.createElement("a");
+      link.href = "#projects";
+      link.textContent = "See them";
+      skillNoteText.appendChild(link);
+    }
+    if (skillClear) skillClear.hidden = !key;
+  }
+  skillButtons.forEach(function (b) {
+    b.addEventListener("click", function () {
+      var key = b.getAttribute("data-skill");
+      if (activeSkill === key) applySkill(null); else applySkill(key, b.textContent);
+    });
+  });
+  if (skillClear) skillClear.addEventListener("click", function () { applySkill(null); });
 
   // ---------------------------------------------------------------
   // Contact form: builds an email draft, nothing is sent from the page.
@@ -515,6 +610,34 @@
       });
     }
 
+    // About paragraph: words brighten as the paragraph scrolls through the screen.
+    var bigEl = document.querySelector(".big");
+    var bigWords = [];
+    if (bigEl) {
+      var parts = bigEl.textContent.trim().split(/\s+/);
+      bigEl.textContent = "";
+      parts.forEach(function (word, i) {
+        var span = document.createElement("span");
+        span.className = "w";
+        span.textContent = word;
+        bigEl.appendChild(span);
+        if (i < parts.length - 1) bigEl.appendChild(document.createTextNode(" "));
+        bigWords.push(span);
+      });
+      root.classList.add("js-words");
+    }
+    var wordsLit = -1;
+    function updateWords() {
+      if (!bigEl || !bigWords.length) return;
+      var r = bigEl.getBoundingClientRect();
+      var vh = window.innerHeight;
+      var prog = Math.min(Math.max((vh * 0.85 - r.top) / (r.height + vh * 0.3), 0), 1);
+      var n = Math.round(prog * bigWords.length);
+      if (n === wordsLit) return;
+      wordsLit = n;
+      bigWords.forEach(function (w, i) { w.classList.toggle("lit", i < n); });
+    }
+
     var ticking = false;
     // Centre the pinned stage on the middle of the screen at any viewport size.
     function setPin() {
@@ -555,6 +678,7 @@
         portraitEl.style.setProperty("--shift", (shiftMax * (1 - s)).toFixed(1) + "px");
       }
       updateAchievements(p);
+      updateWords();
       if (glyph && hero) {
         // Follows the screen at a slightly slower pace, and stops before the hero ends.
         var drift = Math.min(y * 0.92, Math.max(hero.offsetHeight - 460, 0));
@@ -568,8 +692,31 @@
   }
 
   // Pill shrink works with or without motion (only the width changes).
+  var progressBar = document.getElementById("progress");
   function onPillScroll() {
     if (pill) pill.classList.toggle("compact", window.scrollY > 80);
+    if (progressBar) {
+      var max = document.documentElement.scrollHeight - window.innerHeight;
+      progressBar.style.setProperty("--prog", max > 0 ? Math.min(window.scrollY / max, 1).toFixed(4) : "0");
+    }
+  }
+
+  // Which section is on screen, shown beside the name in the pill.
+  var here = document.getElementById("pill-here");
+  var hereLabels = { about: "About", skills: "Skills", projects: "Projects", experience: "Experience", contact: "Contact" };
+  if (here && "IntersectionObserver" in window) {
+    var spy = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var label = hereLabels[entry.target.id] || "";
+        here.textContent = label;
+        here.classList.toggle("on", !!label);
+      });
+    }, { rootMargin: "-45% 0px -50% 0px" });
+    ["top", "about", "skills", "projects", "experience", "contact"].forEach(function (id) {
+      var el = document.getElementById(id);
+      if (el) spy.observe(el);
+    });
   }
   window.addEventListener("scroll", onPillScroll, { passive: true });
   onPillScroll();
