@@ -497,6 +497,13 @@
 
     // 7. Scroll-linked: portrait flips to colour, watermark drifts slower than the page.
     var ticking = false;
+    // Centre the pinned stage on the middle of the screen at any viewport size.
+    function setPin() {
+      if (!stage) return;
+      stage.style.top = Math.max(90, Math.round((window.innerHeight - stage.offsetHeight) / 2)) + "px";
+    }
+    setPin();
+    window.addEventListener("resize", function () { setPin(); updateScroll(); });
     function updateScroll() {
       ticking = false;
       var y = window.scrollY;
@@ -512,8 +519,10 @@
         flip.style.setProperty("--ry", (p * 180).toFixed(1) + "deg");
         flip.style.setProperty("--p", p.toFixed(3));
       }
-      if (glyph && hero && y < hero.offsetHeight * 1.4) {
-        glyph.style.transform = "translateY(" + (y * 0.18).toFixed(1) + "px)";
+      if (glyph && hero) {
+        // Follows the screen at a slightly slower pace, and stops before the hero ends.
+        var drift = Math.min(y * 0.92, Math.max(hero.offsetHeight - 460, 0));
+        glyph.style.transform = "translateY(" + drift.toFixed(1) + "px)";
       }
     }
     window.addEventListener("scroll", function () {
