@@ -5,16 +5,6 @@
   var reduceMotion = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
   var EMAIL = "anant_s@ce.iitr.ac.in";
 
-  // Layout preview: ?photo=right and ?cols=3 try the other arrangements of the pinned stage.
-  // Applied first, so the motion layer below measures the chosen layout.
-  (function () {
-    var stageEl = document.getElementById("stage");
-    if (!stageEl || !window.URLSearchParams) return;
-    var params = new URLSearchParams(window.location.search);
-    if (params.get("photo") === "right") stageEl.setAttribute("data-side", "right");
-    if (params.get("cols") === "3") stageEl.setAttribute("data-cols", "3");
-  })();
-
   // ---------------------------------------------------------------
   // Basics
   // ---------------------------------------------------------------
