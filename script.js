@@ -359,6 +359,8 @@
 
   var hero = document.getElementById("top");
   var flip = document.getElementById("portrait-flip");
+  var journey = document.getElementById("journey");
+  var stage = document.getElementById("stage");
   var cornerTag = document.getElementById("corner-tag");
 
   if (reduceMotion) {
@@ -498,8 +500,14 @@
     function updateScroll() {
       ticking = false;
       var y = window.scrollY;
-      var span = hero ? hero.offsetHeight * 0.7 : 1;
-      var p = Math.min(Math.max(y / span, 0), 1);
+      // Progress follows the pinned stretch: 0 when the stage reaches the nav, 1 just before it releases.
+      var p = 0;
+      if (journey && stage) {
+        var rect = journey.getBoundingClientRect();
+        var pinTop = parseFloat(getComputedStyle(stage).top) || 0;
+        var travel = rect.height - stage.offsetHeight;
+        p = travel > 0 ? Math.min(Math.max((pinTop - rect.top) / (travel * 0.85), 0), 1) : 0;
+      }
       if (flip) {
         flip.style.setProperty("--ry", (p * 180).toFixed(1) + "deg");
         flip.style.setProperty("--p", p.toFixed(3));
