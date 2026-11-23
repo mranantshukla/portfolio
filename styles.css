@@ -430,6 +430,13 @@ button, input, textarea { font: inherit; color: inherit; }
   .stage .portrait { grid-area: portrait; justify-self: start; transform: translateX(var(--shift, 0px)); will-change: transform; }
   .stage .achv { grid-area: achv; justify-self: stretch; max-width: none; }
   .achv-list { grid-template-columns: 1fr 1fr; grid-template-rows: repeat(5, auto); grid-auto-flow: column; column-gap: var(--sp-6); }
+
+  /* Layout variants, chosen with data-side and data-cols on the stage. */
+  .stage[data-side="right"] { grid-template-columns: 1fr auto; grid-template-areas: "corners corners" "achv portrait"; }
+  .stage[data-side="right"] .portrait { justify-self: end; }
+  .stage[data-cols="3"] .achv-list { display: block; column-count: 3; column-gap: var(--sp-5); }
+  .stage[data-cols="3"] .achv-list li { break-inside: avoid; }
+  .stage[data-cols="3"] .achv-list strong { font-size: var(--t-sm); }
   .about-grid { grid-template-columns: 1fr 1.4fr; grid-template-areas: "title copy" "current copy"; align-items: start; column-gap: var(--sp-9); }
   .about-grid .display { grid-area: title; }
   .about-copy { grid-area: copy; }
