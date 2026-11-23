@@ -419,14 +419,17 @@ button, input, textarea { font: inherit; color: inherit; }
   .also-list li { grid-template-columns: 260px 1fr; gap: var(--sp-5); align-items: baseline; }
 }
 @media (min-width: 900px) {
+  /* Portrait on the left, achievements in two columns on the right (first five, then the rest).
+     While scrolling, script.js slides the portrait in from the centre via --shift. */
   .stage {
-    grid-template-columns: 1fr auto 1fr;
-    grid-template-areas: "corners corners corners" ". portrait achv";
-    align-items: center; column-gap: var(--sp-7);
+    grid-template-columns: auto 1fr;
+    grid-template-areas: "corners corners" "portrait achv";
+    align-items: center; column-gap: var(--sp-8);
   }
   .stage .corners { grid-area: corners; }
-  .stage .portrait { grid-area: portrait; }
-  .stage .achv { grid-area: achv; justify-self: start; }
+  .stage .portrait { grid-area: portrait; justify-self: start; transform: translateX(var(--shift, 0px)); will-change: transform; }
+  .stage .achv { grid-area: achv; justify-self: stretch; max-width: none; }
+  .achv-list { grid-template-columns: 1fr 1fr; grid-template-rows: repeat(5, auto); grid-auto-flow: column; column-gap: var(--sp-6); }
   .about-grid { grid-template-columns: 1fr 1.4fr; grid-template-areas: "title copy" "current copy"; align-items: start; column-gap: var(--sp-9); }
   .about-grid .display { grid-area: title; }
   .about-copy { grid-area: copy; }

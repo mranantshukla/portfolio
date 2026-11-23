@@ -500,8 +500,10 @@
     var achvItems = Array.prototype.slice.call(document.querySelectorAll(".achv-list li"));
     var achvShown = -1;
     if (achvItems.length) root.classList.add("js-achv");
+    // Entries start once the portrait has slid across, then appear one by one.
     function updateAchievements(p) {
-      var count = Math.min(achvItems.length, Math.floor(p * (achvItems.length + 1)));
+      var q = Math.min(Math.max((p - 0.12) / 0.88, 0), 1);
+      var count = Math.min(achvItems.length, Math.floor(q * (achvItems.length + 1)));
       if (count === achvShown) return;
       achvShown = count;
       achvItems.forEach(function (li, i) {
@@ -516,8 +518,19 @@
       if (!stage) return;
       stage.style.top = Math.max(90, Math.round((window.innerHeight - stage.offsetHeight) / 2)) + "px";
     }
+    // Wide screens: the portrait starts centred and slides to its place on the left.
+    var portraitEl = document.querySelector(".portrait");
+    var wide = window.matchMedia("(min-width: 900px)");
+    var shiftMax = 0;
+    function measureShift() {
+      if (!portraitEl || !stage) return;
+      if (!wide.matches) { shiftMax = 0; portraitEl.style.setProperty("--shift", "0px"); return; }
+      portraitEl.style.setProperty("--shift", "0px");
+      shiftMax = (stage.clientWidth - portraitEl.offsetWidth) / 2 - portraitEl.offsetLeft;
+    }
     setPin();
-    window.addEventListener("resize", function () { setPin(); updateScroll(); });
+    measureShift();
+    window.addEventListener("resize", function () { setPin(); measureShift(); updateScroll(); });
     function updateScroll() {
       ticking = false;
       var y = window.scrollY;
@@ -532,6 +545,11 @@
       if (flip) {
         flip.style.setProperty("--ry", (p * 180).toFixed(1) + "deg");
         flip.style.setProperty("--p", p.toFixed(3));
+      }
+      if (portraitEl && shiftMax) {
+        var s = Math.min(p / 0.22, 1);
+        s = s * s * (3 - 2 * s); // smoothstep
+        portraitEl.style.setProperty("--shift", (shiftMax * (1 - s)).toFixed(1) + "px");
       }
       updateAchievements(p);
       if (glyph && hero) {
