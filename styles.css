@@ -389,16 +389,32 @@ button, input, textarea { font: inherit; color: inherit; }
 .f-col h3 { font-size: var(--t-sm); font-weight: 500; color: var(--soft); margin-bottom: var(--sp-1); }
 .f-col a { text-decoration: none; transition: opacity 0.2s; width: fit-content; }
 .f-col a:hover { opacity: 0.6; }
+.closing-wrap { margin-block: var(--sp-9) var(--sp-6); }
+.closing-small { font-size: var(--t-lg); color: var(--soft); letter-spacing: var(--track-snug); margin-bottom: var(--sp-3); }
 .closing {
-  margin: var(--sp-9) 0 var(--sp-6);
-  font-size: min(11vw, 8.5rem); font-weight: 700; line-height: var(--lead-none); letter-spacing: var(--track-tight);
+  font-size: min(12vw, 10rem); font-weight: 700; line-height: var(--lead-none); letter-spacing: var(--track-tight);
 }
 .bridge { display: block; width: 100%; height: auto; color: var(--fg); opacity: 0.5; }
-.bridge * { fill: none; stroke: currentColor; stroke-width: 1.2; vector-effect: non-scaling-stroke; }
+.bridge * { fill: none; stroke: currentColor; stroke-width: 1.1; }
 .legal { display: flex; justify-content: space-between; align-items: center; gap: var(--sp-4); flex-wrap: wrap; padding: var(--sp-5) 0 var(--sp-6); font-size: var(--t-sm); color: var(--soft); }
-.to-top { text-decoration: none; transition: color 0.2s, transform 0.2s; }
-.to-top:hover { color: var(--fg); transform: translateY(-2px); }
+.to-top { text-decoration: none; padding: 6px 14px; border: 1px solid var(--line); border-radius: 999px; transition: color 0.2s, background 0.2s, transform 0.2s; }
+.to-top span { display: inline-block; transition: transform 0.25s var(--ease); }
+.to-top:hover span { transform: translateY(-3px); }
+.to-top:hover { color: var(--fg); background: rgb(244 241 236 / 0.08); }
 .to-top:active { transform: scale(0.96); }
+
+/* ---------- Footer extras ---------- */
+.copy {
+  width: fit-content; margin-top: var(--sp-2); padding: 4px 14px;
+  border: 1px solid var(--line); border-radius: 999px; background: none; color: inherit;
+  font-size: var(--t-xs); cursor: pointer; transition: background 0.2s, color 0.2s, transform 0.15s;
+}
+.copy:hover { background: var(--fg); color: var(--bg); }
+.copy:active { transform: scale(0.96); }
+.copy-note { min-height: 1.4em; font-size: var(--t-xs); color: var(--soft); }
+.f-links { display: flex; flex-wrap: wrap; gap: var(--sp-4); margin-top: var(--sp-2); }
+.legal .clock, .legal .colophon { margin: 0; }
+.legal time { color: var(--fg); font-variant-numeric: tabular-nums; }
 
 /* ---------- Project dialog ---------- */
 .project-dialog {
@@ -563,6 +579,8 @@ button, input, textarea { font: inherit; color: inherit; }
   transition-delay: calc(var(--n, 0) * 70ms);
 }
 
+.bridge.js-draw path { stroke-dasharray: var(--len); stroke-dashoffset: var(--len); transition: stroke-dashoffset 1.4s var(--ease); transition-delay: calc(var(--k, 0) * 14ms); }
+.bridge.js-draw.drawn path { stroke-dashoffset: 0; }
 .closing .win:hover .ch { transform: translateY(-6%); transition: transform 0.35s var(--ease); }
 
 /* Timeline path draws itself, then the dots pop in. */

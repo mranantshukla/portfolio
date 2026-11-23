@@ -45,6 +45,49 @@
     navDialog.addEventListener("click", function (e) { if (e.target === navDialog) navDialog.close(); });
   }
 
+  // ---------------------------------------------------------------
+  // Footer: copy-email button and a live Roorkee clock.
+  // ---------------------------------------------------------------
+  var copyBtn = document.getElementById("copy-email");
+  var copyNote = document.getElementById("copy-note");
+  function copyText(text) {
+    function legacy() {
+      var ta = document.createElement("textarea");
+      ta.value = text;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      var ok = false;
+      try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+      document.body.removeChild(ta);
+      return ok;
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      return navigator.clipboard.writeText(text).then(function () { return true; }, function () { return legacy(); });
+    }
+    return Promise.resolve(legacy());
+  }
+  if (copyBtn) {
+    copyBtn.addEventListener("click", function () {
+      copyText(copyBtn.getAttribute("data-email")).then(function (ok) {
+        copyNote.textContent = ok ? "Copied to your clipboard." : "Could not copy. Select the address above.";
+        setTimeout(function () { copyNote.textContent = ""; }, 2500);
+      });
+    });
+  }
+
+  var clockEl = document.getElementById("clock");
+  function tickClock() {
+    if (!clockEl) return;
+    try {
+      clockEl.textContent = new Date().toLocaleTimeString("en-IN", { hour: "2-digit", minute: "2-digit", hour12: false, timeZone: "Asia/Kolkata" }) + " IST";
+    } catch (e) { clockEl.textContent = ""; }
+  }
+  tickClock();
+  setInterval(tickClock, 15000);
+
   // Pill navigation shrinks once the page scrolls.
   var pill = document.getElementById("pill");
 
@@ -589,6 +632,21 @@
           }
         }, 55);
       }, 900);
+    }
+
+    // The bridge draws itself the first time the footer comes into view.
+    if (bridge && "IntersectionObserver" in window) {
+      Array.prototype.forEach.call(bridge.querySelectorAll("path"), function (path, k) {
+        path.style.setProperty("--len", String(Math.ceil(path.getTotalLength())));
+        path.style.setProperty("--k", String(k));
+      });
+      bridge.classList.add("js-draw");
+      var drawObserver = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) { bridge.classList.add("drawn"); drawObserver.disconnect(); }
+        });
+      }, { threshold: 0.25 });
+      drawObserver.observe(bridge);
     }
 
     // 7. Scroll-linked: portrait flips to colour, watermark drifts slower than the page.
