@@ -35,7 +35,7 @@ Audience: recruiters and engineering managers, usually skimming on a phone for u
 
 ## Design
 
-**Visual (updated):** modeled on the structure and feel of a single-page dark portfolio the owner shared as a reference (dark default with a light toggle, large name hero, project cards with detail dialogs, timeline experience, "Let's talk" contact). Content and styling are original; no text, images or code are copied from the reference. Interactions: header social icons with hover tooltips, "Learn more" links with moving arrows, project cards with a subtle tilt on hover, a 3D-lift primary button, smooth scrolling with a back-to-top link, pressed states, reduced-motion support. Single column on phone, two or three columns on desktop.
+**Visual (updated):** built on a design system the owner supplied from a reference site, applied with original content and artwork. Monochrome warm neutrals (ink `#141414`, canvas `#f4f1ec`), Space Grotesk as the only typeface with a fluid `clamp()` scale, sections that alternate dark and light, and a floating pill navigation. Hero is the name in large type with a faint watermark of the owner's own profile data and a portrait that flips to colour on scroll. Projects are folder cards with stacked sheets. Experience is a winding timeline. Contact is an underline-only form that opens an email draft. Footer has a bridge line drawing, a nod to the civil engineering background. Interactions: letter-by-letter reveals, scroll reveals, icon swap on hover, tooltips, 3D primary button, card fan-out on hover, count-up results, theme swap, all skipped for reduced motion. Not built: chat assistant widget and extra pages.
 
 **Sections, top to bottom:**
 
