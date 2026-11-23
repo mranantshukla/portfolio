@@ -496,6 +496,20 @@
     }
 
     // 7. Scroll-linked: portrait flips to colour, watermark drifts slower than the page.
+    // Achievements appear one by one as the flip progresses; the newest is highlighted.
+    var achvItems = Array.prototype.slice.call(document.querySelectorAll(".achv-list li"));
+    var achvShown = -1;
+    if (achvItems.length) root.classList.add("js-achv");
+    function updateAchievements(p) {
+      var count = Math.min(achvItems.length, Math.floor(p * (achvItems.length + 1)));
+      if (count === achvShown) return;
+      achvShown = count;
+      achvItems.forEach(function (li, i) {
+        li.classList.toggle("shown", i < count);
+        li.classList.toggle("active", i === count - 1);
+      });
+    }
+
     var ticking = false;
     // Centre the pinned stage on the middle of the screen at any viewport size.
     function setPin() {
@@ -519,6 +533,7 @@
         flip.style.setProperty("--ry", (p * 180).toFixed(1) + "deg");
         flip.style.setProperty("--p", p.toFixed(3));
       }
+      updateAchievements(p);
       if (glyph && hero) {
         // Follows the screen at a slightly slower pace, and stops before the hero ends.
         var drift = Math.min(y * 0.92, Math.max(hero.offsetHeight - 460, 0));
