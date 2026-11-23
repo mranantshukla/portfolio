@@ -463,8 +463,7 @@
     if (tl) tl.classList.add("in");
   } else {
     // 1. Wordmark letters flip on hover.
-    var wordmark = document.querySelector(".wordmark");
-    if (wordmark) splitLetters(wordmark);
+    document.querySelectorAll(".wordmark .wm").forEach(function (label) { splitLetters(label); });
 
     // 2. Icon buttons: glyph slides out, a twin slides in.
     document.querySelectorAll(".tool").forEach(function (btn) {

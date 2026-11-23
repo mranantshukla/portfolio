@@ -115,8 +115,16 @@ button, input, textarea { font: inherit; color: inherit; }
   border-radius: 999px; box-shadow: var(--e2);
   transition: width 0.5s var(--ease);
 }
-.pill.compact { width: min(100% - 28px, 300px); }
-.wordmark { font-weight: 700; font-size: 1.1rem; letter-spacing: var(--track-snug); text-decoration: none; }
+.pill.compact { width: min(100% - 28px, 360px); }
+.wordmark {
+  display: inline-grid; overflow: hidden; padding-block: 0.15em; margin-block: -0.15em;
+  font-weight: 700; font-size: 1.1rem; letter-spacing: var(--track-snug); text-decoration: none;
+}
+/* The name shows at the top of the page; once you scroll, it changes to the tagline. */
+.wm { grid-area: 1 / 1; white-space: nowrap; transition: transform 0.55s var(--ease), opacity 0.4s ease; }
+.wm-b { transform: translateY(120%); opacity: 0; }
+.pill.compact .wm-a { transform: translateY(-120%); opacity: 0; }
+.pill.compact .wm-b { transform: none; opacity: 1; }
 .pill-tools { display: flex; align-items: center; gap: 4px; }
 .tool {
   position: relative; display: inline-grid; place-items: center;
