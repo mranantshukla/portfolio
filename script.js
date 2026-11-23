@@ -499,6 +499,7 @@
     // Achievements appear one by one as the flip progresses; the newest is highlighted.
     var achvItems = Array.prototype.slice.call(document.querySelectorAll(".achv-list li"));
     var achvShown = -1;
+    var achvPanel = document.getElementById("achv");
     if (achvItems.length) root.classList.add("js-achv");
     // Entries start once the portrait has slid across, then appear one by one.
     function updateAchievements(p) {
@@ -506,6 +507,8 @@
       var count = Math.min(achvItems.length, Math.floor(q * (achvItems.length + 1)));
       if (count === achvShown) return;
       achvShown = count;
+      // The heading waits for the first entry, so nothing shows before the scroll starts.
+      if (achvPanel) achvPanel.classList.toggle("started", count > 0);
       achvItems.forEach(function (li, i) {
         li.classList.toggle("shown", i < count);
         li.classList.toggle("active", i === count - 1);

@@ -250,6 +250,8 @@ button, input, textarea { font: inherit; color: inherit; }
 .achv-list strong { font-size: var(--t-base); font-weight: 600; line-height: 1.25; letter-spacing: var(--track-snug); }
 .achv-list span { font-size: var(--t-sm); color: var(--soft); line-height: 1.35; }
 /* Hidden states exist only once script.js turns on the scroll-driven reveal. */
+.js-achv .achv-title { opacity: 0; transform: translateX(18px); transition: opacity 0.5s var(--ease), transform 0.5s var(--ease); }
+.js-achv .achv.started .achv-title { opacity: 1; transform: none; }
 .js-achv .achv-list li { opacity: 0; transform: translateX(18px); }
 .js-achv .achv-list li.shown { opacity: 0.42; transform: none; }
 .js-achv .achv-list li.active { opacity: 1; border-left-color: var(--fg); }
