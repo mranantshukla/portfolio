@@ -274,6 +274,10 @@ button, input, textarea { font: inherit; color: inherit; }
 /* ---------- About ---------- */
 .about-grid { display: grid; gap: var(--sp-7); }
 .big { font-size: var(--t-xl); line-height: 1.22; letter-spacing: var(--track-snug); max-width: 30em; margin-bottom: var(--sp-6); }
+.quests { margin-bottom: var(--sp-6); }
+.quests h3 { font-size: var(--t-sm); font-weight: 500; color: var(--soft); margin-bottom: var(--sp-3); }
+.quests ul { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+.quests li { padding: 6px 14px; border: 1px solid var(--line); border-radius: 999px; font-size: var(--t-sm); }
 .pub { margin-top: var(--sp-6); color: var(--soft); font-size: var(--t-sm); max-width: var(--measure); }
 .current h3 { font-size: var(--t-sm); color: var(--soft); font-weight: 500; margin-bottom: var(--sp-3); }
 .current li { padding: var(--sp-3) 0; border-top: 1px solid var(--line); display: grid; color: var(--soft); font-size: var(--t-sm); }
