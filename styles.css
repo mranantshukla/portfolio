@@ -94,7 +94,6 @@ button, input, textarea { font: inherit; color: inherit; }
 
 .frame { width: min(100% - var(--gutter) * 2, var(--max)); margin-inline: auto; }
 .sec { padding-block: clamp(var(--sp-8), 10vw, var(--sp-10)); }
-.sec-tight { padding-top: 0; }
 .display {
   font-size: var(--t-2xl); line-height: var(--lead-tight); letter-spacing: var(--track-snug);
 }
@@ -456,6 +455,9 @@ button, input, textarea { font: inherit; color: inherit; }
 @media (max-width: 479px) { .pill-here { display: none; } }
 
 /* ---------- Skills link to projects ---------- */
+.stack-filter { margin-bottom: var(--sp-8); }
+.filter-title { font-size: var(--t-lg); font-weight: 700; letter-spacing: var(--track-snug); }
+.stack-filter .tag-grid { margin-top: var(--sp-4); }
 .chips li.link { padding: 0; }
 .chips li.link button {
   display: block; padding: 6px 14px; border: 0; border-radius: inherit;

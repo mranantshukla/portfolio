@@ -404,7 +404,9 @@
       if (start === null) start = ts;
       var t = Math.min((ts - start) / 1100, 1);
       var eased = 1 - Math.pow(1 - t, 3);
-      el.textContent = (target * eased).toFixed(decimals) + suffix;
+      var value = target * eased;
+      var text = decimals === 0 && target >= 1000 ? Math.round(value).toLocaleString("en-US") : value.toFixed(decimals);
+      el.textContent = text + suffix;
       if (t < 1) requestAnimationFrame(frame);
     }
     requestAnimationFrame(frame);
@@ -762,7 +764,7 @@
 
   // Which section is on screen, shown beside the name in the pill.
   var here = document.getElementById("pill-here");
-  var hereLabels = { about: "About", skills: "Skills", projects: "Projects", research: "Research", experience: "Experience", contact: "Contact" };
+  var hereLabels = { about: "About", projects: "Work", research: "Research", experience: "Experience", contact: "Contact" };
   if (here && "IntersectionObserver" in window) {
     var spy = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
@@ -772,7 +774,7 @@
         here.classList.toggle("on", !!label);
       });
     }, { rootMargin: "-45% 0px -50% 0px" });
-    ["top", "about", "skills", "projects", "research", "experience", "contact"].forEach(function (id) {
+    ["top", "about", "projects", "research", "experience", "contact"].forEach(function (id) {
       var el = document.getElementById(id);
       if (el) spy.observe(el);
     });
