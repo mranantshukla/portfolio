@@ -230,7 +230,7 @@ button, input, textarea { font: inherit; color: inherit; }
 .face.back { transform: rotateY(180deg); }
 
 /* The journey is extra scroll length; the stage stays pinned under the nav while the portrait flips. */
-.journey { min-height: 210vh; }
+.journey { min-height: 260vh; }
 .stage {
   /* Pinned with its middle on the middle of the screen: ~half the stage height above centre. */
   position: sticky; top: max(90px, calc(50vh - 230px));
@@ -243,7 +243,7 @@ button, input, textarea { font: inherit; color: inherit; }
 .achv-title { font-size: var(--t-sm); font-weight: 500; color: var(--soft); margin-bottom: var(--sp-3); }
 .achv-list { display: grid; }
 .achv-list li {
-  display: grid; gap: 2px; padding: 10px 0 10px var(--sp-4);
+  display: grid; gap: 0; padding: 6px 0 6px var(--sp-4);
   border-left: 1px solid var(--line);
   transition: opacity 0.5s var(--ease), transform 0.5s var(--ease), border-color 0.3s;
 }
