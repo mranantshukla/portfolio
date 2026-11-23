@@ -92,18 +92,6 @@
       ],
       stack: ["React", "FastAPI", "LangChain", "ChromaDB", "OpenAI API"]
     },
-    cyclist: {
-      meta: "Accepted at WCTR 2026",
-      title: "Cyclist lateral position detection",
-      points: [
-        "Real-time computer vision on monocular video to estimate a cyclist's lateral position.",
-        "Four-stage pipeline: filtering, scanline edge detection, RANSAC fitting.",
-        "Replaced costly LiDAR and GPS sensors with a low-height camera, cutting fit error 15 to 25%.",
-        "Co-authored with Prof. Indrajit Ghosh."
-      ],
-      stack: ["Computer vision", "RANSAC", "Monocular video"],
-      result: "Fit error down 15 to 25%"
-    },
     llmscope: {
       meta: "Google Developer Students Club, Jun to Jul 2026",
       title: "llmscope",
@@ -136,7 +124,7 @@
     }
   };
 
-  var order = ["nes", "review", "papers", "campus", "cyclist", "llmscope", "swiggy", "lidar"];
+  var order = ["nes", "review", "papers", "campus", "llmscope", "swiggy", "lidar"];
   var current = 0;
   var pd = document.getElementById("project-dialog");
   var pdMeta = document.getElementById("pd-meta");
@@ -196,13 +184,11 @@
     review: ["llm", "rag", "agents"],
     papers: ["llm", "agents", "langgraph", "openai"],
     campus: ["llm", "rag", "agents", "langchain", "openai", "chromadb", "fastapi", "react"],
-    cyclist: [],
     llmscope: ["cpp"],
     swiggy: ["llm", "agents"],
     lidar: []
   };
   var alsoTags = [
-    ["yolo", "opencv", "pytorch", "ultralytics"], // vehicle detection
     ["xgboost"],                                  // credit risk model
     [],                                           // flight delay prediction
     ["sql", "powerbi"],                           // customer intelligence
@@ -211,11 +197,15 @@
   ];
   var folderItems = Array.prototype.slice.call(document.querySelectorAll(".folders > li"));
   var alsoItems = Array.prototype.slice.call(document.querySelectorAll(".also-list > li"));
-  var linkedItems = folderItems.concat(alsoItems);
+  var researchItems = Array.prototype.slice.call(document.querySelectorAll(".research-card[data-skills]"));
+  var linkedItems = folderItems.concat(alsoItems, researchItems);
   var linkedTags = folderItems.map(function (li) {
     var btn = li.querySelector("[data-project]");
     return (btn && projectTags[btn.getAttribute("data-project")]) || [];
-  }).concat(alsoItems.map(function (li, i) { return alsoTags[i] || []; }));
+  }).concat(
+    alsoItems.map(function (li, i) { return alsoTags[i] || []; }),
+    researchItems.map(function (el) { return el.getAttribute("data-skills").split(/\s+/); })
+  );
 
   var skillButtons = Array.prototype.slice.call(document.querySelectorAll("[data-skill]"));
   var skillNoteText = document.getElementById("skill-note-text");
@@ -702,7 +692,7 @@
 
   // Which section is on screen, shown beside the name in the pill.
   var here = document.getElementById("pill-here");
-  var hereLabels = { about: "About", skills: "Skills", projects: "Projects", experience: "Experience", contact: "Contact" };
+  var hereLabels = { about: "About", skills: "Skills", projects: "Projects", research: "Research", experience: "Experience", contact: "Contact" };
   if (here && "IntersectionObserver" in window) {
     var spy = new IntersectionObserver(function (entries) {
       entries.forEach(function (entry) {
@@ -712,7 +702,7 @@
         here.classList.toggle("on", !!label);
       });
     }, { rootMargin: "-45% 0px -50% 0px" });
-    ["top", "about", "skills", "projects", "experience", "contact"].forEach(function (id) {
+    ["top", "about", "skills", "projects", "research", "experience", "contact"].forEach(function (id) {
       var el = document.getElementById(id);
       if (el) spy.observe(el);
     });

@@ -454,6 +454,24 @@ button, input, textarea { font: inherit; color: inherit; }
 .folders > li.is-match .folder-card { border-color: var(--fg); box-shadow: var(--e3); }
 .also-list > li.is-match strong { text-decoration: underline; text-underline-offset: 4px; }
 
+/* ---------- Research ---------- */
+.paper { display: grid; gap: var(--sp-6); padding: var(--sp-6) 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.paper-status { font-size: var(--t-sm); color: var(--soft); font-weight: 500; }
+.paper-title { margin-top: var(--sp-2); font-size: var(--t-2xl); line-height: var(--lead-tight); letter-spacing: var(--track-snug); max-width: 20em; }
+.paper-meta { margin-top: var(--sp-3); color: var(--soft); font-size: var(--t-sm); max-width: var(--measure); }
+.paper-points { display: grid; gap: var(--sp-2); margin: var(--sp-5) 0; padding-left: 1.1em; list-style: disc; max-width: var(--measure); }
+.paper-stat { align-self: end; }
+.paper-figure { font-size: var(--t-3xl); font-weight: 700; letter-spacing: var(--track-tight); line-height: 1; }
+.paper-caption { margin-top: var(--sp-2); color: var(--soft); font-size: var(--t-sm); max-width: 18ch; line-height: 1.4; }
+.research-card { margin-top: var(--sp-6); display: grid; gap: var(--sp-3); max-width: 62ch; transition: opacity 0.35s var(--ease); }
+.research-card h3 { font-size: var(--t-xl); letter-spacing: var(--track-snug); line-height: 1.15; }
+.research-card > p:not(.paper-status) { color: var(--soft); }
+.research-card.is-dim { opacity: 0.2; }
+.research-card.is-match { outline: 2px solid var(--fg); outline-offset: 12px; border-radius: 6px; }
+@media (min-width: 900px) {
+  .paper { grid-template-columns: 1fr auto; column-gap: var(--sp-9); }
+}
+
 /* ---------- About paragraph reads in as it scrolls ---------- */
 .js-words .big .w { opacity: 0.2; transition: opacity 0.35s ease; }
 .js-words .big .w.lit { opacity: 1; }

@@ -42,6 +42,7 @@
         <a href="#about">About</a>
         <a href="#skills">Skills</a>
         <a href="#projects">Projects</a>
+        <a href="#research">Research</a>
         <a href="#experience">Experience</a>
         <a href="#contact">Contact</a>
       </nav>
@@ -227,14 +228,6 @@
             </span>
             <span class="folder-meta"><span>Full-stack</span><span>View details &#8599;</span></span>
           </button></li>
-          <li><button class="folder" type="button" data-project="cyclist">
-            <span class="folder-card">
-              <span class="folder-sheets" aria-hidden="true"><span class="sheet s3"></span><span class="sheet s2"></span><span class="sheet s1"><span class="sheet-metric">WCTR</span><span class="sheet-cap">accepted 2026</span></span></span>
-              <span class="folder-name">Cyclist lateral position detection</span>
-              <span class="folder-go" aria-hidden="true">&#8599;</span>
-            </span>
-            <span class="folder-meta"><span>Computer vision</span><span>View details &#8599;</span></span>
-          </button></li>
           <li><button class="folder" type="button" data-project="llmscope">
             <span class="folder-card">
               <span class="folder-sheets" aria-hidden="true"><span class="sheet s3"></span><span class="sheet s2"></span><span class="sheet s1"><span class="sheet-metric">C++14</span><span class="sheet-cap">live tracing</span></span></span>
@@ -263,13 +256,51 @@
 
         <h3 class="subhead">Also built</h3>
         <ul class="also-list">
-          <li><strong>Vehicle detection</strong>YOLOv11n on 5,300+ urban images, 93% mAP50, eight vehicle classes.</li>
           <li><strong>Credit risk model</strong>SMOTE with logistic regression and XGBoost on 30k+ records. 0.91 recall.</li>
           <li><strong>Flight delay prediction</strong>180k+ flight records, 21 features. 86% accurate model.</li>
           <li><strong>Customer intelligence</strong>Python, SQL and Power BI pipeline for a D2C brand's 3,900 customers.</li>
           <li><strong>Yield curve modeling</strong>Cox-Ingersoll-Ross with jump-diffusion. 0.85+ out-of-sample R².</li>
           <li><strong>Autoreply email agent</strong>Intent routing and prompt chaining. Ambiguous queries go to a person.</li>
         </ul>
+      </div>
+    </section>
+
+    <!-- Research (light) -->
+    <section id="research" class="sec" data-tone="light">
+      <div class="frame">
+        <header class="sec-head">
+          <h2 class="display">Research</h2>
+          <p class="hint">A published paper and an ongoing research project.</p>
+        </header>
+
+        <article class="paper">
+          <div class="paper-main">
+            <p class="paper-status">Accepted at WCTR 2026</p>
+            <h3 class="paper-title">Real-Time Cyclist Lateral Position Detection using CV</h3>
+            <p class="paper-meta">Anant Shukla, Prof. Indrajit Ghosh. World Conference on Transportation Research (WCTR), 2026.</p>
+            <ul class="paper-points">
+              <li>Estimates a cyclist's lateral position in real time from monocular video.</li>
+              <li>Four-stage computer vision pipeline, including filtering, scanline edge detection and RANSAC fitting.</li>
+              <li>Swaps costly LiDAR and GPS sensors for a low-height camera setup.</li>
+            </ul>
+            <ul class="chips">
+              <li>Computer vision</li><li>RANSAC</li><li>Monocular video</li>
+            </ul>
+          </div>
+          <div class="paper-stat">
+            <p class="paper-figure">15&ndash;25%</p>
+            <p class="paper-caption">Lower fit error from weighting</p>
+          </div>
+        </article>
+
+        <article class="research-card" data-skills="yolo opencv pytorch ultralytics">
+          <p class="paper-status">Research project, CED, IIT Roorkee. May 2025 to present.</p>
+          <h3>Real-time multi-class vehicle detection</h3>
+          <p>Fine-tuned YOLOv11n on 5,300+ urban traffic images across 8 vehicle types, including CNG vehicles and e-rickshaws. Reaches up to 93% mAP50 and detects occluded vehicles in real time in complex urban video. Next up: edge deployment and 15+ vehicle classes.</p>
+          <ul class="chips">
+            <li>YOLOv11n</li><li>PyTorch</li><li>Ultralytics</li><li>OpenCV</li>
+          </ul>
+        </article>
       </div>
     </section>
 
@@ -353,6 +384,7 @@
         <a href="#about">About</a>
         <a href="#skills">Skills</a>
         <a href="#projects">Projects</a>
+        <a href="#research">Research</a>
         <a href="#experience">Experience</a>
       </nav>
       <div class="f-col">
